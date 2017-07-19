@@ -1,0 +1,739 @@
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="prototype2_files/jquery.sumoselect.min.js"></script>
+	<link href="prototype2_files/sumoselect.css" rel="stylesheet" />
+	<script>
+	 $(function() {
+		$( window ).trigger('resize');
+
+		if ( window.location.search.substring(1).indexOf('embed') > -1 ) {
+			$('#midget-view').hide();
+			$('body').addClass('embed');
+		} else {
+			$('#midget-view').SumoSelect({ placeholder: 'Configure view' });
+			$('#midget-view').change( function() { updateMidget()} );
+		}
+
+		if ( window.location.search.substring(1).indexOf('rotate') > -1) {
+			$('body').addClass('rotater');
+		} else {
+			$('body').removeClass('rotater');
+		}
+
+		if ( window.location.search.substring(1).indexOf('nav') > -1 ) {
+			$('body').addClass( 'micro-nav' );
+		}
+
+		if ( window.location.search.substring(1).indexOf('no-chart') > -1 ) {
+ 			$('body').removeClass('ticket');
+ 			$('li[data-val="Ticket"').removeClass('selected');
+		}
+
+		$( "div.chart img" ).draggable({ axis: 'x', containment: [-433, 0, 0, 547] });
+
+
+
+	  });
+
+
+		$( window ).resize(function() {
+
+			 if ( $( window ).width() <= 298 && $( window ).height() <= 347 ) {
+				$('div.ticket img').attr('src', 'prototype2_files/images/ticket-buy.png');
+		  	}
+
+			 if ( $( window ).width() >= 1412 && $( window ).height() >= 1041 ) {
+	 			$('body').addClass('big-news positions');
+	 			$('li[data-val="News Feed"').addClass('selected');
+	 			$('li[data-val="Positions"').addClass('selected');
+				$('div.ticket img').attr('src', 'prototype2_files/images/ticket-buy.png');
+			 } else {
+	 			$('body').removeClass('big-news positions');
+	 			$('li[data-val="News Feed"').removeClass('selected');
+	 			$('li[data-val="Positions"').removeClass('selected');
+	 		}
+
+
+			 if ( $( window ).width() > 298 && $( window ).width() < 1412 && $( window ).height() > 347 && $( window ).height() < 1041 ) {
+		  		$('div.ticket img').attr('src', 'prototype2_files/images/ticket-small.png');
+			 }
+
+			 if ( $( window ).width() >= 1800 && $( window ).height() >= 1215 ) {
+	 			$('body').addClass('about');
+	 			$('li[data-val="Market info"').addClass('selected');
+			 } else {
+	 			$('body').removeClass('about');
+	 			$('li[data-val="Market info"').removeClass('selected');
+	 		}
+
+			 if ( $( window ).width() >=377 && $( window ).height() >= 610 ) {
+	 			$('body').addClass('tabs');
+			 } else {
+	 			$('body').removeClass('tabs');
+	 		}
+
+			 if ( $( window ).width() >=377 && $( window ).height() >= 830  && $( window ).width() <= 1412) {
+	 			$('body').addClass('news');
+	 			$('li[data-val="News Feed"').addClass('selected');
+			 } else {
+	 			$('body').removeClass('news');
+	 			if (! $('body').hasClass('big-news') ) {
+		 			$('li[data-val="News Feed"').removeClass('selected');
+		 		}
+	 		}
+
+
+	  });
+
+	function toggleTicket( objImg ) {
+
+		if ( objImg.attr('src').indexOf('small') > 0 ) {
+			objImg.attr('src', 'prototype2_files/images/ticket-buy.png');
+		} else {
+			objImg.attr('src', 'prototype2_files/images/ticket-small-buy.png');
+		}
+	}
+
+	 function updateMidget(){
+
+	  	if ( $('li[data-val="Ticket"').hasClass('selected') ){
+	 		$('body').addClass('ticket');
+	 	} else {
+	 		$('body').removeClass('ticket');
+	  	}
+	  	if ( $('li[data-val="Chart"').hasClass('selected') ){
+	 		$('body').addClass('chart');
+	 	} else {
+	 		$('body').removeClass('chart');
+	  	}
+	  	if ( $('li[data-val="News Feed"').hasClass('selected') ){
+	 		$('body').addClass('big-news');
+	 	} else {
+	 		$('body').removeClass('big-news news');
+	  	}
+	  	if ( $('li[data-val="Market info"').hasClass('selected') ){
+	 		$('body').addClass('about');
+	 	} else {
+	 		$('body').removeClass('about');
+	  	}
+	  	if ( $('li[data-val="Positions"').hasClass('selected') ){
+	 		$('body').addClass('positions');
+	 	} else {
+	 		$('body').removeClass('positions');
+	  	}
+	  	if ( $('li[data-val="Alerts"').hasClass('selected') ){
+	 		$('body').addClass('alerts');
+	 	} else {
+	 		$('body').removeClass('alerts');
+	  	}
+	  	if ( $('li[data-val="Events"').hasClass('selected') ){
+	 		$('body').addClass('events');
+	 	} else {
+	 		$('body').removeClass('events');
+	  	}
+
+	 }
+	 </script>
+
+	<style>
+
+	body {
+		font-family: 'Avenir Next', 'Avenir', 'Arial';
+	}
+
+	body div {
+	    background-color: #ccc;
+	    border: 2px solid #ddd;
+	    color: #969696;
+	    font-size: 16px;
+	    font-weight: bold;
+	}
+	  
+	  div.ticket {
+	    border: none;
+	    position: fixed;
+	    top: 10px;
+	    left: 10px;
+	    display: none;
+	  }
+
+
+	  div.chart {
+	    height: 100%;
+	    width: 100%;
+	    background: url(prototype2_files/images/chart-wide.png) white repeat-x;
+	    background-size: auto 100%;
+	    background-position-x: right;
+	    border: none;
+	    display: none;
+	  }
+	  
+	  div.chart img {
+	    height: 100%;
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	  }
+
+	body.chart div.chart {
+		display: block;
+	}
+	body.ticket div.ticket {
+		display: block;
+	}
+
+	#tabs {
+		display: none;
+		border: none;
+	}
+
+	#tabs table {
+		width: 100%;
+	}
+
+	div#bottom-view {
+		display: none;
+	}
+
+	#tabs td {
+		width: 14%;
+	}
+
+
+	#news-column{
+		display: none;
+	}
+
+	body.big-news #news-column{
+		display: block;
+	}
+
+  		#news-column h2 {
+  			margin-top: 0;
+  		}
+
+  		#news-vertical {
+			background-repeat: repeat-y;
+			background-image: url("prototype2_files/images/news-vertical.png");
+			height: 100%;
+			width: 280px;
+			border: none;
+		}
+
+		div#bottom-view {
+			background-image: none;
+		}
+
+		img#bottom-positions {
+			display:	none;
+		}
+
+    }
+  
+	  #bottom-positions {
+	  	display: none;
+	  }
+
+		body.tabs #tabs, body.positions #tabs, body.alerts #tabs, body.events #tabs, body.news #bottom-view, body.positions #bottom-view, body.alerts #bottom-view, body.events #bottom-view {
+			display: block;
+			background: #ddd;
+			position: absolute;
+			left: 	0;
+			bottom: 28px;
+			padding: 8px;
+			width: 100%;
+		}
+
+		body.embed #tabs {
+			bottom: 14px;
+		}
+
+		body.embed.news div#bottom-view {
+			bottom: 14px;
+		}
+
+		body.embed.news #tabs {
+			bottom: 180px;
+		}
+
+		body.tabs #tabs, body.positions #tabs, body.alerts #tabs, body.events #tabs {
+			padding: 0px;
+		}
+
+		body.tabs #tabs table {
+			padding: 8px;
+		}
+
+		span#show, span#hide {
+			height: 8px;
+			width:	8px;
+			position: absolute;
+			right: 2px;
+			top: 11px;
+		}
+
+		span#show {
+			display: none;
+			background-image: url("prototype2_files/images/up.png");
+		}
+
+		span#hide {
+			display: block;
+			height: 8px;
+			width:	8px;
+			background-image: url("prototype2_files/images/down.png");
+		}
+
+		span#hide-news, span#hide-about {
+			height: 8px;
+			width:	8px;
+			position: absolute;
+			left: 5px;
+			top: 30px;
+			background-image: url("prototype2_files/images/right.png");
+		}
+
+
+		body.tabs span#show {
+			display: block;
+		}
+		body.tabs span#hide {
+			display: none;
+		}
+
+		#tabs table td:last-child {
+			text-align: right;
+			font-size: 11px;
+		}
+
+	#about-column {
+		display: none;
+	}
+
+
+	div.pair {
+		display: none;
+	}
+
+
+	body.about div#about-column {
+			display: block;
+	}
+
+		#about-column h2 {
+			margin-top: 0;
+		}
+
+	body.about.big-news div#about-column {
+		height: 50%;
+	}
+	
+	body.about.big-news div#news-column {
+		height: 50%;
+		top: 47%;
+		z-index: 100;
+		padding-top: 20px;
+
+	}
+
+
+	div.SumoSelect {
+		position: fixed;
+		right: 3px;
+		top: 10px;
+		z-index: 1000;
+		background: #EEE;
+		border-radius: 2px;
+			border: solid 1px #ccc;
+	}
+
+
+	.SumoSelect span, .SumoSelect label {
+		font-weight: normal;
+	}
+
+	div.SumoSelect > .optWrapper {
+		width: 141px;
+	}
+
+	div.SumoSelect > .CaptionCont {
+		width: 127px;
+		color: #444;
+		padding: 2px;
+		padding-left: 10px;
+		background: #EEE;
+		border: none;
+		font-weight: normal;
+		font-size: 14px;
+		margin: 2px 0;
+	}
+
+	div.SumoSelect > .optWrapper.open {
+		top: 27px;
+		left: -1px;
+	}
+
+
+	.pop-out {
+		display: none;
+	}
+
+	.embed .pop-out {
+		display: block;
+	}
+
+	.pop-out img {
+		position: fixed;
+		top: 5px;
+		right: 5px;
+		z-index: 1000;
+		cursor: pointer;
+	}
+
+
+		body.positions span#show, body.news span#show {
+			display: none;
+		}
+		body.positions span#hide, body.news span#hide {
+			display: block;
+		}
+
+		body.positions #tabs {
+			bottom: 165px;
+		}
+
+		body.news #tabs {
+			bottom: 200px;
+		}
+
+		body.positions #news-tab {
+			display: none;
+		}
+
+		body.positions #tabs, body.positions div#bottom-view {
+			z-index: 100;
+		}
+
+		body.positions div#bottom-view {
+			display: block;
+			width: 100%;
+			height: 150px;
+			bottom: 0;
+		    position: absolute;
+		    background-color: white;
+		    border: none;
+		}
+
+		body.news div#bottom-view {
+			display: block;
+			width: 100%;
+			height: 166px;
+			bottom: 36px;
+		    position: absolute;
+		    background-color: white;
+		    border: none;
+			background-repeat: repeat-x;
+			background-image: url("prototype2_files/images/news.png");
+			background-position: 4px 10px;
+			padding: 0;
+		}
+
+		body.positions div#bottom-view {
+			background-image: none;
+		}
+
+		body.positions img#bottom-positions {
+			display:	block;
+			margin-top: 20px;
+   			margin-left: 10px;
+		}
+
+		body.positions #tabs td:nth-child(2) {
+			background-color: #eee;
+			font-weight: bold;
+		}
+
+
+  		body.big-news #news-column {
+  			display: block;
+  			height: 100%;
+  			width: 280px;
+  			position: absolute;
+  			right: 0;
+  			top: 0;
+  			background-color: #fff;
+		    border: none;
+		    padding: 20px;
+  		}
+
+  		body.big-news #news-column h2 {
+  			margin-top: 0;
+  		}
+
+  		body.big-news #news-vertical {
+			background-repeat: repeat-y;
+			background-image: url("prototype2_files/images/news-vertical.png");
+			height: 100%;
+			width: 280px;
+			border: none;
+		}
+
+		body.big-news #bottom-news, body.big-news #news-tab {
+			display: none;
+		}
+
+		body.big-news div#bottom-view {
+			background-image: none;
+		}
+
+		body.big-news img#bottom-positions {
+			display:	block;
+			margin-top: 20px;
+   			margin-left: 10px;
+		}
+
+
+		body.news #tabs td:first-child {
+			background-color: #eee;
+			font-weight: bold;
+		}
+
+		body.big-news #tabs td:nth-child(2) {
+			background-color: #eee;
+			font-weight: bold;
+		}
+
+
+
+
+		body.about div#about-column {
+  			display: block;
+  			height: 100%;
+  			width: 280px;
+  			position: absolute;
+  			right: 0;
+  			top: 0;
+  			background-color: #fff;
+		    border: none;
+		    padding: 20px;
+		}
+
+		body.about.news div#about-column {
+			height: 50%;
+		}
+
+		body.about div#news-column {
+			height: 50%;
+			top: 47%;
+			z-index: 100;
+		}
+
+  		body.about #about-column h2 {
+  			margin-top: 0;
+  		}
+
+
+
+
+	  	@media screen and (max-height: 347px) and (max-width: 298px)  {
+			div.chart, div.SumoSelect {
+		  		display: none !important;
+		  	}
+		}
+
+	  	@media screen and (max-height: 331px) and (max-width: 282px)  {
+		  	div.ticket {
+		  		top: auto;
+		  		left: auto;
+		  		right: 0;
+		  		bottom: 29px;
+		  	}
+		}
+
+	  	@media screen and (max-height: 349px) and (max-width: 270px)  {
+		  	div.ticket {
+		  		top: 0;
+		  		left: 0;
+		  		right: auto;
+		  		bottom: auto;
+		  	}
+		}
+
+	  	@media screen and (max-height: 349px) and (max-width: 220px)  {
+		  	div.ticket, div.chart {
+		  		display: none !important;
+		  	}
+
+		  	div.pair {
+		  		display: block;
+		  		border: none;
+		  		background: none;
+		  		position: absolute;
+		  		left: 0;
+		  		top: 0;
+		  	}
+		}
+
+	  	@media screen and (max-height: 311px) and (max-width: 271px)  {
+		  	div.ticket img {
+		  		position: relative;
+		  		left: -1px;
+		  		top: -1px;
+		  	}
+		}
+
+
+
+		.SumoSelect > .optWrapper.multiple > .options > li.selected span i, .SumoSelect .select-all.selected > span i, .SumoSelect .select-all.partial > span i {
+			background-color: #3B99FC !important;
+		}
+
+
+		.border {
+		    background-color: #CCC;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		}
+
+		.h-border {
+		    width: 100%;
+		    height: 2px;
+		    cursor: ns-resize;
+		}
+
+		body.about.big-news div#news-column .h-border {
+		    width: 100%;
+		    height: 2px;
+		    cursor: ns-resize;
+		}
+
+		.v-border {
+		    height: 100%;
+		    width: 2px;
+		    cursor: ew-resize;
+		}
+
+		body.about.big-news span#hide {
+			right: 330px;
+		}
+
+		.rotater div.chart {
+			transform: rotate(180deg);
+			transform: scale(-1, 1);
+		}
+
+		div.chart img {
+			left: -433px;
+		}
+
+
+		span#micro-nav {
+		  display: none;
+		}
+
+		.micro-nav .ticket {
+			top: 40px;
+		} 
+
+
+		.micro-nav span#micro-nav {
+			position: fixed;
+			display: block;
+		 	float: left;
+		 	z-index: 1000;
+		 	top: 10px;
+		}
+
+		span#micro-nav p {
+			margin: 0;
+			font-weight: bold;
+		}
+
+		span#micro-nav span {
+		  margin-left: 5px;
+		  font-weight: normal;
+		}
+
+		span#micro-nav #prev {
+		  color: #ccc;
+		  margin-left: 56px;
+		}
+
+	</style>
+
+	</head>
+
+<body class="ticket chart" style="overflow: hidden">
+
+    <span id="micro-nav">
+    	<p>FTSE 100
+	      <span id="prev">◀ Previous</span>
+	      <span id="next">Next ▶</span>
+  		</p>
+    </span>
+
+	<select id="midget-view" multiple="multiple">
+		<option id="ticket" selected>Ticket</option>
+		<option id="chart" selected>Chart</option>
+		<option id="news">News Feed</option>
+		<option id="about">Market info</option>
+		<option id="positions">Positions</option>
+		<option id="alerts">Alerts</option>
+		<option id="events">Events</option>
+		<option id="signals">Signals</option>
+	</select>
+
+    <div class="pop-out">
+    	<img src="prototype2_files/images/pop-out.png" onclick="top.newPanel( 'Apple', true );" >
+    </div>
+
+    <div class="chart">
+    	<img src="prototype2_files/images/chart-wide.png" >
+    </div>
+    <div class="ticket">
+        <img src="prototype2_files/images/ticket-small.png" onclick="toggleTicket( $(this) );"/>
+    </div>
+    <div class="pair">
+        <img src="prototype2_files/images/pair.png" />
+    </div>
+    <div id="tabs">
+    	<span class="border h-border"></span>
+	    <table>
+	    		<tr>	
+		    		<td id="news-tab">News</td>
+		    		<td>Positions</td>
+		    		<td>Alerts</td>
+		    		<td>Events</td>
+		    		<td>Signals</td>
+		    		<td>About</tD>
+		    		<td><span id="show"></span><span id="hide"></span></td>
+		    	</tr>
+	    </table>
+	</div>
+    <div id="bottom-view">
+    		<img src="prototype2_files/images/positions.png" id="bottom-positions" />
+    </div>
+
+    <div id="news-column">
+    	<span class="border v-border"></span>
+    	<span class="border h-border"></span>
+		<span id="hide-news"></span>
+    	<h2>News</h2>
+    	<div id="news-vertical">
+    	</div>
+    </div>
+    <div id="about-column">
+    	<span class="border v-border"></span>
+		<span id="hide-about"></span>
+    	<h2>About Apple</h2>
+    		<img src="prototype2_files/images/about.png" />
+    	</div>
+    </div>
+
+</body>
+</html>

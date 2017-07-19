@@ -1,0 +1,72 @@
+body {
+	font-family: 'Avenir Next', 'Avenir', 'Arial';
+}
+
+body p {
+	margin: 0px;
+}
+
+div.content {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.workspace-panel {
+	border: 5px solid grey;
+	position: absolute !important;
+	overflow: hidden;
+}
+
+#list {
+	height: 500px;
+	width: 500px;
+	min-width: 255px;
+	min-height: 150px;
+	top: 7%;
+	left: 5%;
+}
+
+#list2 {
+	height: 400px;
+	width: 700px;
+	min-width: 255px;
+	min-height: 150px;
+	top: 40%;
+	left: 25%;
+}
+
+#market {
+	height: 500px;
+	width: 450px;
+	top: 4%;
+	left: 50%;
+	min-height: 165px;
+	min-width: 220px;
+}
+
+.header {
+	background: #ccc;
+	width:	100%;
+	height: 30px;
+	line-height: 30px;
+
+}
+
+iframe {
+	overflow: hidden;
+}
+
+
+.header span {
+	border: 1px solid grey;
+	font-size: 20px;
+	line-height: 15px;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 10px;
+	text-align: center;
+	margin-top: 5px; 
+	cursor: pointer;
+}

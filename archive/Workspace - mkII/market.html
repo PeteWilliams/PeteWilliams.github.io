@@ -1,0 +1,375 @@
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="prototype2_files/jquery.sumoselect.min.js"></script>
+	<link href="prototype2_files/sumoselect.css" rel="stylesheet" />
+	<script>
+	 $(function() {
+		$('#midget-view').SumoSelect({ placeholder: 'Configure view' });
+		$('#midget-view').change( function() { updateMidget()} );
+	  });
+
+	 function updateMidget(){
+
+	 	if($('#ticket').is(':selected')) {
+	 		$('body').addClass('ticket');
+	 	} else {
+	 		$('body').removeClass('ticket');
+	  	}
+	 	if($('#chart').is(':selected')) {
+	 		$('body').addClass('chart');
+	 	} else {
+	 		$('body').removeClass('chart');
+	  	}
+	 	if($('#news').is(':selected')) {
+	 		$('body').addClass('news');
+	 	} else {
+	 		$('body').removeClass('news');
+	  	}
+	 	if($('#about').is(':selected')) {
+	 		$('body').addClass('about');
+	 	} else {
+	 		$('body').removeClass('about');
+	  	}
+	 	if($('#positions').is(':selected')) {
+	 		$('body').addClass('positions');
+	 	} else {
+	 		$('body').removeClass('positions');
+	  	}
+	 	if($('#alerts').is(':selected')) {
+	 		$('body').addClass('alerts');
+	 	} else {
+	 		$('body').removeClass('alerts');
+	  	}
+	 	if($('#events').is(':selected')) {
+	 		$('body').addClass('events');
+	 	} else {
+	 		$('body').removeClass('events');
+	  	}
+
+	 }
+	 </script>
+
+	<style>
+
+	body {
+		font-family: 'Avenir Next', 'Avenir', 'Arial';
+	}
+
+	body div {
+	    background-color: #ccc;
+	    border: 2px solid #aaa;
+	    color: #969696;
+	    font-size: 16px;
+	    font-weight: bold;
+	}
+	  
+	  div.ticket {
+	    position: absolute;
+	    display: none;
+	    top: 10px;
+	    left: 10px;
+	  }
+
+
+	  body.ticket div.ticket {
+	  	display: block;
+	  }
+	  
+	  body.chart div.chart {
+	  	display: block;
+	  }
+
+	  div.chart {
+	    display: none;
+	    height: 438px;
+	  	height: 100%;
+	    width: 100%;
+	    background: url(prototype2_files/images/chart-wide.png) white repeat-x;
+	    background-size: auto 100%;
+	    background-position-x: right;
+	    border: none;
+	  }
+	  
+	  div.chart img {
+	    height: 100%;
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	  }
+
+
+	table#tabs {
+		display: none;
+		background: #ddd;
+		position: absolute;
+		left: 	0;
+		bottom: 200px;
+		padding: 8px;
+		width: 100%;
+	}
+
+	div#bottom-view {
+		display: none;
+		width: 100%;
+		height: 200px;
+		bottom: 0;
+	    position: absolute;
+	    background-color: white;
+	    border: none;
+		background-repeat: repeat-x;
+		background-image: url("prototype2_files/images/news.png");
+	}
+
+	table#tabs td {
+		width: 14%;
+	}
+
+
+	#news-column{
+		display: none;
+		height: 100%;
+		width: 280px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding-top: 40px;
+		background-color: #fff;
+	    border: none;
+	    border-left: 1px solid grey;
+	    padding: 60px 20px 0 20px;
+	}
+
+	body.news #news-column{
+		display: block;
+	}
+
+  		#news-column h2 {
+  			margin-top: 0;
+  		}
+
+  		#news-vertical {
+			background-repeat: repeat-y;
+			background-image: url("prototype2_files/images/news-vertical.png");
+			height: 100%;
+			width: 280px;
+			border: none;
+		}
+
+		#bottom-news, #news-tab {
+			display: none;
+		}
+
+
+		div#bottom-view {
+			background-image: none;
+		}
+
+		img#bottom-positions {
+			display:	block;
+			margin-top: 20px;
+   			margin-left: 10px;
+		}
+
+		table#tabs td:nth-child(2) {
+			background-color: #eee;
+			font-weight: bold;
+		}
+
+    }
+  
+	  #bottom-positions {
+	  	display: none;
+	  }
+
+		body.positions #tabs, body.alerts #tabs, body.events #tabs, body.positions #bottom-view, body.alerts #bottom-view, body.events #bottom-view {
+			display: block;
+		}
+
+		span#show {
+			display: none;
+		}
+		span#hide {
+			display: block;
+		}
+
+		table#tabs td:last-child {
+			text-align: right;
+			font-size: 11px;
+		}
+
+	#about-column {
+		display: none;
+		height: 100%;
+		width: 280px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		background-color: #fff;
+	    border: none;
+	    border-left: 1px solid grey;
+	    padding: 60px 20px 0 20px;
+	}
+
+
+	body.about div#about-column {
+			display: block;
+	}
+
+  		#about-column h2 {
+  			margin-top: 0;
+  		}
+
+		body.about.news div#about-column {
+			height: 50%;
+		}
+		
+		body.about.news div#news-column {
+			height: 50%;
+			top: 47%;
+			border-top: 1px solid grey;
+			z-index: 100;
+			padding-top: 20px;
+
+		}
+
+
+
+		div.pair {
+			display: none;
+		}
+
+
+	  	@media screen and (max-height: 400px) and (max-width: 290px)  {
+			div.chart {
+		  		display: none;
+		  	}
+		}
+
+	  	@media screen and (max-height: 386px) and (max-width: 271px)  {
+		  	div.ticket {
+		  		top: auto;
+		  		left: auto;
+		  		right: 0;
+		  		bottom: 29px;
+		  	}
+		}
+
+	  	@media screen and (max-height: 349px) and (max-width: 270px)  {
+		  	div.ticket {
+		  		top: 0;
+		  		left: 0;
+		  		right: auto;
+		  		bottom: auto;
+		  	}
+		}
+
+	  	@media screen and (max-height: 349px) and (max-width: 220px)  {
+		  	div.ticket {
+		  		display: none
+		  	}
+
+		  	div.pair {
+		  		display: block;
+		  		border: none;
+		  		background: none;
+		  		position: absolute;
+		  		left: 0;
+		  		top: 0;
+
+
+		  	}
+		}
+
+		div.SumoSelect {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			z-index: 1000;
+			background: #EEE;
+			border-radius: 2px;
+   			border: solid 1px #ccc;
+		}
+
+
+		.SumoSelect span, .SumoSelect label {
+			font-weight: normal;
+		}
+
+		div.SumoSelect > .optWrapper {
+			width: 141px;
+		}
+
+		div.SumoSelect > .CaptionCont {
+			width: 127px;
+			color: #444;
+			padding: 2px;
+			padding-left: 10px;
+			background: #EEE;
+			border: none;
+			font-weight: normal;
+			font-size: 14px;
+			margin: 2px 0;
+		}
+
+		div.SumoSelect > .optWrapper.open {
+			top: 27px;
+			left: -1px;
+		}
+	</style>
+
+	</head>
+
+<body class="ticket chart">
+
+	<select id="midget-view" multiple="multiple">
+		<option id="ticket" selected>Ticket</option>
+		<option id="chart"selected>Chart</option>
+		<option id="news">News Feed</option>
+		<option id="about">Market info</option>
+		<option id="positions">Positions</option>
+		<option id="alerts">Alerts</option>
+		<option id="events">Events</option>
+		<option id="signals">Signals</option>
+	</selecT>
+
+    <div class="chart">
+    </div>
+    <div class="ticket">
+        <img src="prototype2_files/images/ticket.png" />
+    </div>
+    <div class="pair">
+        <img src="prototype2_files/images/pair.png" />
+    </div>
+    <table id="tabs">
+    		<tr>	
+	    		<td id="news-tab">News</td>
+	    		<td>Positions</td>
+	    		<td>Alerts</td>
+	    		<td>Events</td>
+	    		<td>Signals</td>
+	    		<td>About</tD>
+	    		<td><span id="show">Show ▲</span><span id="hide">Hide ▼</span></td>
+	    	</tr>
+    </table>
+    <div id="bottom-view">
+    		<img src="prototype2_files/images/news.png" id="bottom-news" />
+    		<img src="prototype2_files/images/positions.png" id="bottom-positions" />
+    </div>
+
+    <div id="news-column">
+    	<h2>News</h2>
+    	<div id="news-vertical">
+    	</div>
+    </div>
+    <div id="about-column">
+    	<h2>About Apple</h2>
+    		<img src="prototype2_files/images/about.png" />
+    	</div>
+    </div>
+
+</body>
+</html>

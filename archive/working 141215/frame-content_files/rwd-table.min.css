@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<title>404 Page</title>
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans' type='text/css'>
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Inconsolata' type='text/css'>
+    <link rel="stylesheet" href="http://liveweave.com/css/style-user.css" />  <!-- Always the last stylesheet -->
+<link rel="shortcut icon" href="http://liveweave.com/images/favicon.ico" />
+
+<style>
+body { font-family: 'Open Sans', Arial, sans-serif;
+    background: url('http://liveweave.com/images/bg-rainbow.png') no-repeat center center fixed;
+    webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+    h1 {color: white;}
+</style>
+
+ <!-- Google Analytics -->
+    <script type="text/javascript">    
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30660734-1']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();    
+    </script>
+</head>
+
+<body style="color: #ccc;">
+
+<div id="header" >
+   <ul id="header-menu">
+                <li><a href="http://liveweave.com"><span id="logo" class="tooltip" title="Start a new code"></span></a></li>
+	</ul>
+</div> 
+
+<div id="wrapper" >
+
+    <div>
+
+            <ul style="list-style-type:none; text-align:center;">
+            	<li><span style="background: url(http://liveweave.com/images/alert.png) no-repeat; width:256px; height: 256px;display:block; margin: auto;"></span></li>
+                <li><span style="font-size:60px;">404</span></li>
+                <li><h1>Sorry, but we can't seem to find your weave!</h1></li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li><a href="../"><span style="padding:5px 10px; background-color:#0CF; color:#555;">Back to Editor</a></span></li>
+            </ul>
+     </div>
+</div>
+  
+</body>
+</html>

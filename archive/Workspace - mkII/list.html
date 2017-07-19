@@ -1,0 +1,1416 @@
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+
+
+<style>
+  
+/*!
+ * Responsive Tables v5.0.4 (http://gergeo.se/RWD-Table-Patterns)
+ * This is an awesome solution for responsive tables with complex data.
+ * Authors: Nadan Gergeo <nadan.gergeo@gmail.com> (www.gergeo.se) & Maggie Wachs (www.filamentgroup.com)
+ * Licensed under MIT (https://github.com/nadangergeo/RWD-Table-Patterns/blob/master/LICENSE-MIT)
+ */
+.dropdown-menu>li.checkbox-row{padding:5px 20px}.dropdown-menu li.checkbox-row{display:block;clear:both;font-weight:normal;line-height:20px;color:#333;white-space:nowrap}.dropdown-menu li.checkbox-row label{font-weight:normal}.dropdown-menu li.checkbox-row:hover,.dropdown-menu li.checkbox-row input:hover,.dropdown-menu li.checkbox-row label:hover{cursor:pointer}.no-touch .dropdown-menu>.checkbox-row:hover,.no-touch .dropdown-menu>.checkbox-row:active{text-decoration:none;color:#262626;background-color:#f5f5f5}.btn-toolbar{margin-bottom:20px}.lt-ie8 .btn-toolbar{display:none}.table-responsive{border-radius:3px;border:1px solid #ddd;margin-bottom:20px}.table-responsive>.table{margin-bottom:0}.table-responsive>.table-bordered{border:0}.table-responsive>.table-bordered>thead>tr>th:first-child,.table-responsive>.table-bordered>tbody>tr>th:first-child,.table-responsive>.table-bordered>tfoot>tr>th:first-child,.table-responsive>.table-bordered>thead>tr>td:first-child,.table-responsive>.table-bordered>tbody>tr>td:first-child,.table-responsive>.table-bordered>tfoot>tr>td:first-child{border-left:0}.table-responsive>.table-bordered>thead>tr>th:last-child,.table-responsive>.table-bordered>tbody>tr>th:last-child,.table-responsive>.table-bordered>tfoot>tr>th:last-child,.table-responsive>.table-bordered>thead>tr>td:last-child,.table-responsive>.table-bordered>tbody>tr>td:last-child,.table-responsive>.table-bordered>tfoot>tr>td:last-child{border-right:0}.table-responsive>.table-bordered>tbody>tr:last-child>th,.table-responsive>.table-bordered>tfoot>tr:last-child>th,.table-responsive>.table-bordered>tbody>tr:last-child>td,.table-responsive>.table-bordered>tfoot>tr:last-child>td{border-bottom:0}.table-responsive[data-pattern="priority-columns"]{position:relative;width:100%;margin-bottom:20px;overflow-y:hidden;overflow-x:auto;-ms-overflow-style:-ms-autohiding-scrollbar;border-radius:3px;border:1px solid #ddd;-webkit-overflow-scrolling:touch}.table-responsive[data-pattern="priority-columns"]>.table{margin-bottom:0}.table-responsive[data-pattern="priority-columns"]>.table>thead>tr>th,.table-responsive[data-pattern="priority-columns"]>.table>tbody>tr>th,.table-responsive[data-pattern="priority-columns"]>.table>tfoot>tr>th,.table-responsive[data-pattern="priority-columns"]>.table>thead>tr>td,.table-responsive[data-pattern="priority-columns"]>.table>tbody>tr>td,.table-responsive[data-pattern="priority-columns"]>.table>tfoot>tr>td{white-space:nowrap}.table-responsive[data-pattern="priority-columns"]>.table-bordered{border:0}.table-responsive[data-pattern="priority-columns"]>.table-bordered>thead>tr>th:first-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tbody>tr>th:first-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tfoot>tr>th:first-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>thead>tr>td:first-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tbody>tr>td:first-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tfoot>tr>td:first-child{border-left:0}.table-responsive[data-pattern="priority-columns"]>.table-bordered>thead>tr>th:last-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tbody>tr>th:last-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tfoot>tr>th:last-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>thead>tr>td:last-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tbody>tr>td:last-child,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tfoot>tr>td:last-child{border-right:0}.table-responsive[data-pattern="priority-columns"]>.table-bordered>tbody>tr:last-child>th,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tfoot>tr:last-child>th,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tbody>tr:last-child>td,.table-responsive[data-pattern="priority-columns"]>.table-bordered>tfoot>tr:last-child>td{border-bottom:0}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority],.mq.js.lt-ie10 .sticky-table-header th[data-priority],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority],.mq.js.lt-ie10 .sticky-table-header td[data-priority]{display:none}.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="1"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header th[data-priority="1"],.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="1"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header td[data-priority="1"]{display:inline}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="1"],.mq.js.lt-ie10 .sticky-table-header th[data-priority="1"],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="1"],.mq.js.lt-ie10 .sticky-table-header td[data-priority="1"]{display:table-cell}@media screen and (min-width:480px){.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="2"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header th[data-priority="2"],.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="2"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header td[data-priority="2"]{display:inline}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="2"],.mq.js.lt-ie10 .sticky-table-header th[data-priority="2"],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="2"],.mq.js.lt-ie10 .sticky-table-header td[data-priority="2"]{display:table-cell}}@media screen and (min-width:640px){.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="3"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header th[data-priority="3"],.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="3"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header td[data-priority="3"]{display:inline}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="3"],.mq.js.lt-ie10 .sticky-table-header th[data-priority="3"],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="3"],.mq.js.lt-ie10 .sticky-table-header td[data-priority="3"]{display:table-cell}}@media screen and (min-width:800px){.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="4"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header th[data-priority="4"],.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="4"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header td[data-priority="4"]{display:inline}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="4"],.mq.js.lt-ie10 .sticky-table-header th[data-priority="4"],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="4"],.mq.js.lt-ie10 .sticky-table-header td[data-priority="4"]{display:table-cell}}@media screen and (min-width:960px){.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="5"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header th[data-priority="5"],.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="5"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header td[data-priority="5"]{display:inline}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="5"],.mq.js.lt-ie10 .sticky-table-header th[data-priority="5"],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="5"],.mq.js.lt-ie10 .sticky-table-header td[data-priority="5"]{display:table-cell}}@media screen and (min-width:1120px){.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="6"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header th[data-priority="6"],.lt-ie9.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="6"],.lt-ie9.mq.js.lt-ie10 .sticky-table-header td[data-priority="6"]{display:inline}.mq.js .table-responsive[data-pattern="priority-columns"] th[data-priority="6"],.mq.js.lt-ie10 .sticky-table-header th[data-priority="6"],.mq.js .table-responsive[data-pattern="priority-columns"] td[data-priority="6"],.mq.js.lt-ie10 .sticky-table-header td[data-priority="6"]{display:table-cell}}table.table-small-font{font-size:12px;-webkit-text-size-adjust:none;line-height:1.5em}table.focus-on tbody tr:hover{cursor:pointer}table.focus-on tbody tr.unfocused th,table.focus-on tbody tr.unfocused td{color:#999;color:rgba(0,0,0,0.4)}table.focus-on tbody tr.focused th,table.focus-on tbody tr.focused td{background-color:#5bc0de;color:#000}table th.col-hide,table td.col-hide{display:none}table th.col-show,table td.col-show{display:inline}.lt-ie9 table th.col-show,.lt-ie9 table td.col-show{display:table-cell}.lt-ie9 table.display-all th,.lt-ie9 table.display-all td{display:inline !important}table.display-all th,table.display-all td{display:table-cell !important}.sticky-table-header{background-color:#fff;border:none;border-radius:0;border-top:1px solid #ddd;border-bottom:1px solid #ddd;position:absolute;top:0;visibility:hidden;z-index:990;overflow:hidden;min-width:100%}.sticky-table-header.fixed-solution{min-width:0;position:fixed}.lt-ie10 .sticky-table-header.fixed-solution{border-left:1px solid #ddd;border-right:1px solid #ddd;box-sizing:content-box;border-bottom:none}.sticky-table-header.border-radius-fix{border-bottom-left-radius:3px;border-bottom-right-radius:3px}.sticky-table-header>.table{margin-bottom:0}.sticky-table-header>.table>thead>tr>th,.sticky-table-header>.table>tbody>tr>th,.sticky-table-header>.table>tfoot>tr>th,.sticky-table-header>.table>thead>tr>td,.sticky-table-header>.table>tbody>tr>td,.sticky-table-header>.table>tfoot>tr>td{white-space:nowrap}.sticky-table-header>.table-bordered{border:0}.sticky-table-header>.table-bordered>thead>tr>th:first-child,.sticky-table-header>.table-bordered>tbody>tr>th:first-child,.sticky-table-header>.table-bordered>tfoot>tr>th:first-child,.sticky-table-header>.table-bordered>thead>tr>td:first-child,.sticky-table-header>.table-bordered>tbody>tr>td:first-child,.sticky-table-header>.table-bordered>tfoot>tr>td:first-child{border-left:0}.sticky-table-header>.table-bordered>thead>tr>th:last-child,.sticky-table-header>.table-bordered>tbody>tr>th:last-child,.sticky-table-header>.table-bordered>tfoot>tr>th:last-child,.sticky-table-header>.table-bordered>thead>tr>td:last-child,.sticky-table-header>.table-bordered>tbody>tr>td:last-child,.sticky-table-header>.table-bordered>tfoot>tr>td:last-child{border-right:0}.sticky-table-header>.table-bordered>tbody>tr:last-child>th,.sticky-table-header>.table-bordered>tfoot>tr:last-child>th,.sticky-table-header>.table-bordered>tbody>tr:last-child>td,.sticky-table-header>.table-bordered>tfoot>tr:last-child>td{border-bottom:0}
+
+
+  body table {
+    font-size: 13px;
+  }
+  
+  .table-responsive td, .table-responsive th {
+    text-align: right;
+  }
+  
+.table-container {
+  width: 100%;
+  overflow: truncate;
+}
+
+.table-responsive {
+  border-radius:0;
+  width: auto;
+}
+
+.table-responsive[data-pattern="priority-columns"] {
+  width: auto;
+}
+
+.btn-toolbar {
+  display: none;
+}
+
+#menu {
+  display: none;
+  height: 100%;
+  width: 160px;
+  float: left;
+  padding: 5px;
+}
+
+#menu .dropdown-menu>li.checkbox-row {
+  padding:0;
+}
+
+#menu .dropdown-menu{
+  display:  block;
+  position: static;
+  border:   none;
+  float:    none;
+  min-width:  100%;
+  box-shadow: none;
+}
+
+
+#menu .more {
+  display: none;
+}
+
+table.first-col {
+  float: left;
+  width:  160px;
+    font-weight: bold;
+}
+
+table.first-col td, table.first-col th {
+    border: 1px solid #ddd;
+    border-top: 1px solid #ddd !important;
+    border-right: none;
+}
+ 
+th {
+    min-width: 24px !important;
+    max-width: 48px !important;
+}
+
+th.medium {
+    max-width: 62px !important;
+}
+
+th.widget {
+  max-width: none;
+}
+  
+  td.midget {
+   position: relative; 
+    min-width: 83px;
+  }
+  
+td.midget div {
+    background-color: #ccc;
+    border: 2px solid #aaa;
+    color: #969696;
+    font-size: 16px;
+    font-weight: bold;
+}
+  
+  div.ticket {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  
+  div.chart {
+    height: 438px;
+    width: 100%;
+    min-width: 500px;
+  }
+  
+  div.chart img {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+table, div.chart {
+  height: 100%;
+
+}
+
+  @media screen and (min-width: 960px) {
+     table tr:first-child td {
+      background-color: #efefef;
+    }
+  }
+
+#toolbar p {
+  margin: none;
+  line-height: 17px;
+}
+
+
+#toolbar {
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+#toolbar span {
+  margin-right: 0;
+}
+
+#toolbar span img {
+  margin-left: 6px;
+}
+
+#toolbar img.active {
+  border: 1px solid #ddd;
+}
+
+img#slider {
+  display: none;
+}
+
+#views {
+  width: 100%;
+}
+
+#panel-charts, #panel-pairs, #panel-midget {
+  display: none;
+    height: 100%;
+    width: 100%;
+}
+
+#panel-midget iframe {
+  border: none;
+}
+
+#panel-pairs {
+  background: white url( prototype2_files/images/pair.png) space 0 0;
+}
+
+#panel-charts {
+  background: white url( prototype2_files/images/chart-small.png) space 0 0;
+}
+
+span#micro-nav {
+  display: none;
+  float: right;
+}
+
+span#micro-nav span {
+  margin-left: 5px;
+}
+
+span#micro-nav #prev {
+  color: #ccc;
+}
+
+#toolbar {
+  color: #888;
+}
+
+#change-view label {
+  font-weight: normal;
+}
+
+#toolbar #change-view .dd-option, #toolbar #change-view .dd-selected {
+  padding: 2px;
+}
+
+#toolbar img {
+  margin-left: 4px;
+  margin-top: 2px;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+a.dd-selected {
+  color:  #444;
+}
+
+#toolbar label {
+  margin: 2px 0;
+}
+
+</style>
+
+<link rel="stylesheet" href="bower_components/RWD-Table-Patterns/dist/css/rwd-table.min.css">
+<link rel="stylesheet" href="prototype2_files/bootstrap.min.css">
+<script src="prototype2_files/bootstrap.min.js"></script>
+<script src="prototype2_files/jquery.min.js"></script>
+<script src="prototype2_files/jquery-ui.min.js"></script>
+<script src="prototype2_files/jquery.ddslick.min.js"></script>
+  <script src="prototype2_files/jquery.sumoselect.min.js"></script>
+  <link href="prototype2_files/sumoselect.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <div id="toolbar">
+
+
+  <select id="change-view" >
+    <option data-imagesrc="prototype2_files/images/view-list.png" value="0">List view</option>
+    <option data-imagesrc="prototype2_files/images/view-charts.png" value="1">Charts view</option>
+    <option data-imagesrc="prototype2_files/images/view-pairs.png" value="2">Pairs view</option>
+    <option data-imagesrc="prototype2_files/images/view-midget.png" value="3">Market view</option>
+  </select>
+
+
+    <p>
+      <span onclick="$('#menu').toggle();"><img src="prototype2_files/images/view-customise.png" />Customise</span>
+      <span id="micro-nav">
+        <span id="prev">◀ Previous</span>
+        <span id="next">Next ▶</span>
+      </span>
+    <img src="prototype2_files/images/slider.png" id="slider" />
+    </p>
+
+  </div>
+
+<div id="menu">
+</div>
+
+<div id="views">
+  <div id="panel-charts">
+  </div>
+
+  <div id="panel-pairs">   
+  </div>
+
+  <div id="panel-midget">
+      <iframe src="market.html" style="width: 100%; height: 100%;" scrolling="no"></iframe>   
+  </div>
+
+  <div class="table-container" id="panel-list">
+
+    <table class="table first-col">
+     <thead>
+     	<th>Market name</th>
+     </thead>
+     <tr>
+      <td>Apple</td>
+     </tr>
+     <tr>
+      <td>Facebook</td>
+     </tr>
+     <tr>
+      <td>Wall Street</td>
+     </tr>
+     <tr>
+      <td>Amazon</td>
+     </tr>
+     <tr>
+      <td>Tesla</td>
+     </tr>
+     <tr>
+      <td>Google</td>
+     </tr>
+     <tr>
+      <td>FTSE 100</td>
+     </tr>
+     <tr>
+      <td>Vodafone</td>
+     </tr>
+     <tr>
+      <td>BP</td>
+     </tr>
+     <tr>
+      <td>Lloyds</td>
+     </tr>
+     <tr>
+      <td>Germany 30</td>
+     </tr>
+     <tr>
+      <td>EUR USD</td>
+     </tr>
+     <tr>
+      <td>EUR GBP</td>
+     </tr>
+      </table>
+
+
+
+    <div class="table-responsive" >
+    <table class="table">
+     <thead>
+      <th data-priority="1">Sell</th>
+      <th data-priority="2">Buy</th>
+      <th data-priority="1">Change: %</th>
+      <th data-priority="3" class="medium">points</th>
+      <th data-priority="3">High</th>
+      <th data-priority="3">Low</th>
+      <th data-priority="4">Spread</th>
+      <th data-priority="2">RSI</th>
+      <th data-priority="7">Last update</th>
+      <th data-priority="7">Volume</th>
+      <th data-priority="7">MACD</th>
+      <th data-priority="7">Moving average</th>
+      <th data-priority="7">Momentum</th>
+      <th data-priority="7" class="medium">Consecutive candles</th>
+      <th data-priority="7" class="medium">Standard deviation</th>
+      <th data-priority="7">Market cap</th>
+      <th data-priority="7">52wk high</th>
+      <th data-priority="7">52wk high date</th>
+      <th data-priority="7">52wk low</th>
+      <th data-priority="7">52wk low date</th>
+      <th data-priority="5" class="midget">
+          <select id="market">
+            <option value="midget">Market overview</option>
+            <option value="ticket">Ticket only</option>
+            <option value="chart">Chart only</option>
+            <option value="none">No market preview</option>
+        </select>
+        </th>
+     </thead>
+     <tr>
+      <td>851.8</td>
+      <td>853.8</td>
+      <td>5.45</td>
+      <td>0.64</td>
+      <td>825.8</td>
+      <td>868.8</td>
+      <td>2</td>
+      <td>73</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+       <td rowspan="14" class="midget">
+           <div class="chart" style="display: block;">
+            <img src="prototype2_files/images/chart.png" />
+           </div>
+         <div class="ticket" style="display: block;">
+            <img src="prototype2_files/images/ticket.png" />
+         </div>
+       </td>
+     </tr>
+     <tr>
+      <td>740.3</td>
+      <td>742.3</td>
+      <td>-0.74</td>
+      <td>-0.10</td>
+      <td>712.3</td>
+      <td>755.3</td>
+      <td>2</td>
+      <td>24</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>16317.2</td>
+      <td>16319.2</td>
+      <td>-1039.41</td>
+      <td>-6.37</td>
+      <td>16403.31</td>
+      <td>16222.99</td>
+      <td>1</td>
+      <td>63</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>501.4</td>
+      <td>503.4</td>
+      <td>42.47</td>
+      <td>8.47</td>
+      <td>519.4</td>
+      <td>491.4</td>
+      <td>1</td>
+      <td>35</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>295.8</td>
+      <td>297.8</td>
+      <td>-23.28</td>
+      <td>-7.87</td>
+      <td>317.8</td>
+      <td>286.8</td>
+      <td>4</td>
+      <td>36</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>0.9</td>
+      <td>2.9</td>
+      <td>0.04</td>
+      <td>4.90</td>
+      <td>25.9</td>
+      <td>20.9</td>
+      <td>1</td>
+      <td>76</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>6022.5</td>
+      <td>6024.5</td>
+      <td>-260.77</td>
+      <td>-4.33</td>
+      <td>6084.39</td>
+      <td>5926.8</td>
+      <td>1</td>
+      <td>57</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>370.6</td>
+      <td>372.6</td>
+      <td>-34.39</td>
+      <td>-9.28</td>
+      <td>380.6</td>
+      <td>400.6</td>
+      <td>1</td>
+      <td>48</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>396</td>
+      <td>398</td>
+      <td>-24.31</td>
+      <td>-6.14</td>
+      <td>412</td>
+      <td>392</td>
+      <td>2</td>
+      <td>46</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>842.6</td>
+      <td>844.6</td>
+      <td>-50.56</td>
+      <td>-6.00</td>
+      <td>839.6</td>
+      <td>836.6</td>
+      <td>1</td>
+      <td>68</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>9670.5</td>
+      <td>9672.5</td>
+      <td>239.83</td>
+      <td>2.48</td>
+      <td>9735.8</td>
+      <td>9652.06</td>
+      <td>1</td>
+      <td>96</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>1.12408</td>
+      <td>1.12428</td>
+      <td>-0.05</td>
+      <td>-5.44</td>
+      <td>1.12768</td>
+      <td>1.11827</td>
+      <td>3</td>
+      <td>84</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+     <tr>
+      <td>0.72798</td>
+      <td>0.72818</td>
+      <td>-0.04</td>
+      <td>-5.31</td>
+      <td>0.73903</td>
+      <td>0.72263</td>
+      <td>1</td>
+      <td>89</td>
+      <td>12/10/2015 09:00</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+     </tr>
+    </table>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+
+
+  function switchView( objImg ) {
+
+    $('#slider').hide();
+
+    switch ( objImg.selectedIndex ) {
+      case 0:
+        $('#panel-charts, #panel-pairs, #panel-midget, #micro-nav').hide();
+        $('#panel-list').show();
+      break;
+      case 1:
+        $('#panel-list, #panel-pairs, #panel-midget, #micro-nav').hide();
+        $('#slider, #panel-charts').show();
+      break;
+      case 2:
+        $('#panel-list, #panel-charts, #panel-midget, #micro-nav').hide();
+        $('#panel-pairs').show();
+      break;
+      case 3:
+        $('#panel-list, #panel-charts, #panel-pairs').hide();
+        $('#panel-midget, #micro-nav').show();
+      break;
+    }
+
+  }
+
+   $(function() {
+      $('.table-responsive').responsiveTable({'addFocusBtn':false});
+      $('#change-view').ddslick({ onSelected: function(data){ switchView(data) } });
+
+    // $('#midget-view').SumoSelect({ placeholder: 'Configure view' });
+   });
+  
+  
+      $( "#market" ).change(function() {
+        switch ( $( "#market" ).val() ) {
+          case 'chart':
+            $('.ticket').hide();
+            $('.chart').show();
+            break;
+          case 'ticket':
+            $('.ticket').show();
+            $('.chart').hide();
+            break;
+          case 'midget':
+            $('.ticket').show();
+            $('.chart').show();
+            break;
+          case 'none':
+            $('.checkbox-row:last-child input').attr('checked', false).trigger('change');
+            break;
+       }
+    });
+
+/*!
+ * Responsive Tables v5.0.4 (http://gergeo.se/RWD-Table-Patterns)
+ * This is an awesome solution for responsive tables with complex data.
+ * Authors: Nadan Gergeo <nadan.gergeo@gmail.com> (www.gergeo.se) & Maggie Wachs (www.filamentgroup.com)
+ * Licensed under MIT (https://github.com/nadangergeo/RWD-Table-Patterns/blob/master/LICENSE-MIT)
+ */
+(function ($) {
+    'use strict';
+
+    // RESPONSIVE TABLE CLASS DEFINITION
+    // ==========================
+
+    var ResponsiveTable = function(element, options) {
+        var that = this;
+
+        this.options = options;
+        this.$tableWrapper = null; //defined later in wrapTable
+        this.$tableScrollWrapper = $(element); //defined later in wrapTable
+        this.$table = $(element).find('table');
+
+        if(this.$table.length !== 1) {
+            throw new Error('Exactly one table is expected in a .table-responsive div.');
+        }
+
+        //apply pattern option as data-attribute, in case it was set via js
+        this.$tableScrollWrapper.attr('data-pattern', this.options.pattern);
+
+        //if the table doesn't have a unique id, give it one.
+        //The id will be a random hexadecimal value, prefixed with id.
+        //Used for triggers with displayAll button.
+        this.id = this.$table.prop('id') || this.$tableScrollWrapper.prop('id') || 'id' + Math.random().toString(16).slice(2);
+
+        this.$tableClone = null; //defined farther down
+        this.$stickyTableHeader = null; //defined farther down
+
+        //good to have - for easy access
+        this.$thead = this.$table.find('thead');
+        this.$tbody = this.$table.find('tbody');
+        this.$hdrCells = this.$thead.find('th');
+        this.$bodyRows = this.$tbody.find('tr');
+
+        //toolbar and buttons
+        this.$btnToolbar = null; //defined farther down
+        this.$dropdownGroup = null; //defined farther down
+        this.$dropdownBtn = null; //defined farther down
+        this.$dropdownContainer = null; //defined farther down
+
+        this.$displayAllBtn = null; //defined farther down
+
+        this.$focusGroup = null; //defined farther down
+        this.$focusBtn = null; //defined farther down
+
+        //misc
+        this.displayAllTrigger = 'display-all-' + this.id + '.responsive-table';
+        this.idPrefix = this.id + '-col-';
+
+        // Check if iOS
+        // property to save performance
+        this.iOS = isIOS();
+      
+        // Setup table
+        // -------------------------
+      
+        //wrap table
+        this.wrapTable();
+
+        //create toolbar with buttons
+        this.createButtonToolbar();
+
+        // Setup cells
+        // -------------------------
+
+        //setup header cells
+        this.setupHdrCells();
+
+        //setup standard cells
+        this.setupStandardCells();
+
+        //create sticky table head
+        if(this.options.stickyTableHeader){
+            this.createStickyTableHeader();
+        }
+
+        // hide toggle button if the list is empty
+        if(this.$dropdownContainer.is(':empty')){
+            this.$dropdownGroup.hide();
+        }
+
+        // Event binding
+        // -------------------------
+
+        // on orientchange, resize and displayAllBtn-click
+        $(window).bind('orientationchange resize ' + this.displayAllTrigger, function(){
+
+            //update the inputs' checked status
+            that.$dropdownContainer.find('input').trigger('updateCheck');
+
+            //update colspan and visibility of spanning cells
+            $.proxy(that.updateSpanningCells(), that);
+
+        });
+    };
+
+    ResponsiveTable.DEFAULTS = {
+        pattern: 'priority-columns',
+        stickyTableHeader: true,
+        fixedNavbar: '.navbar-fixed-top',  // Is there a fixed navbar? The stickyTableHeader needs to know about it!
+        addDisplayAllBtn: true, // should it have a display-all button?
+        addFocusBtn: true,  // should it have a focus button?
+        focusBtnIcon: 'glyphicon glyphicon-screenshot'
+    };
+
+    // Wrap table
+    ResponsiveTable.prototype.wrapTable = function() {        
+        this.$tableScrollWrapper.wrap('<div class="table-wrapper"/>');
+        this.$tableWrapper = this.$tableScrollWrapper.parent();
+    };
+
+    // Create toolbar with buttons
+    ResponsiveTable.prototype.createButtonToolbar = function() {
+        var that = this;
+
+        this.$btnToolbar = $('<div class="btn-toolbar" />');
+
+        this.$dropdownGroup = $('<div class="btn-group dropdown-btn-group pull-right" />');
+        this.$dropdownBtn = $('<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Display <span class="caret"></span></button>');
+        this.$dropdownContainer = $('<ul class="dropdown-menu"/>');
+
+        // Focus btn
+        if(this.options.addFocusBtn) {
+            // Create focus btn group
+            this.$focusGroup = $('<div class="btn-group focus-btn-group" />');
+
+            // Create focus btn
+            this.$focusBtn = $('<button class="btn btn-default">Focus</button>');
+
+            if(this.options.focusBtnIcon) {
+                this.$focusBtn.prepend('<span class="' + this.options.focusBtnIcon + '"></span> ');
+            }
+
+            // Add btn to group
+            this.$focusGroup.append(this.$focusBtn);
+            // Add focus btn to toolbar
+            this.$btnToolbar.append(this.$focusGroup);
+
+            // bind click on focus btn
+            this.$focusBtn.click(function(){
+                $.proxy(that.activateFocus(), that);
+            });
+
+            // bind click on rows
+            this.$bodyRows.click(function(){
+                $.proxy(that.focusOnRow($(this)), that);
+            });
+        }
+
+         // Display-all btn
+        if(this.options.addDisplayAllBtn) {
+            // Create display-all btn
+            this.$displayAllBtn = $('<button class="btn btn-default">Display all</button>');
+            // Add display-all btn to dropdown-btn-group
+            this.$dropdownGroup.append(this.$displayAllBtn);
+
+            if (this.$table.hasClass('display-all')) {
+                // add 'btn-primary' class to btn to indicate that display all is activated
+                this.$displayAllBtn.addClass('btn-primary');
+            }
+
+            // bind click on display-all btn
+            this.$displayAllBtn.click(function(){
+                $.proxy(that.displayAll(null, true), that);
+            });
+        }
+
+        //add dropdown btn and menu to dropdown-btn-group
+        this.$dropdownGroup.append(this.$dropdownBtn).append(this.$dropdownContainer);
+        $('#menu').append(this.$dropdownContainer);
+
+        //add dropdown group to toolbar
+        this.$btnToolbar.append(this.$dropdownGroup);
+
+        // add toolbar above table
+        this.$tableScrollWrapper.before(this.$btnToolbar);
+    };
+
+    ResponsiveTable.prototype.clearAllFocus = function() {
+        this.$bodyRows.removeClass('unfocused');
+        this.$bodyRows.removeClass('focused');
+    };
+
+    ResponsiveTable.prototype.activateFocus = function() {
+        // clear all
+        this.clearAllFocus();
+
+        if(this.$focusBtn){
+            this.$focusBtn.toggleClass('btn-primary');
+        }
+
+        this.$table.toggleClass('focus-on');
+    };
+
+    ResponsiveTable.prototype.focusOnRow = function(row) {
+        // only if activated (.i.e the table has the class focus-on)
+        if(this.$table.hasClass('focus-on')) {
+            var alreadyFocused = $(row).hasClass('focused');
+
+            // clear all
+            this.clearAllFocus();
+
+            if(!alreadyFocused) {
+                this.$bodyRows.addClass('unfocused');
+                $(row).addClass('focused');
+            }
+        }
+    };
+
+    /**
+     * @param activate Forces the displayAll to be active or not. If anything else than bool, it will not force the state so it will toggle as normal.
+     * @param trigger Bool to indicate if the displayAllTrigger should be triggered.
+     */
+    ResponsiveTable.prototype.displayAll = function(activate, trigger) {
+        if(this.$displayAllBtn){
+            // add 'btn-primary' class to btn to indicate that display all is activated
+            this.$displayAllBtn.toggleClass('btn-primary', activate);
+        }
+
+        this.$table.toggleClass('display-all', activate);
+        if(this.$tableClone){
+            this.$tableClone.toggleClass('display-all', activate);
+        }
+
+        if(trigger) {
+            $(window).trigger(this.displayAllTrigger);
+        }
+    };
+
+    ResponsiveTable.prototype.preserveDisplayAll = function() {
+        var displayProp = 'table-cell';
+        if($('html').hasClass('lt-ie9')){
+            displayProp = 'inline';
+        }
+
+        $(this.$table).find('th, td').css('display', displayProp);
+        if(this.$tableClone){
+            $(this.$tableClone).find('th, td').css('display', displayProp);
+        }
+    };
+
+    ResponsiveTable.prototype.createStickyTableHeader = function() {
+        var that = this;
+
+        //clone table head
+        that.$tableClone = that.$table.clone();
+
+        //replace ids
+        that.$tableClone.prop('id', this.id + '-clone');
+        that.$tableClone.find('[id]').each(function() {
+            $(this).prop('id', $(this).prop('id') + '-clone');
+        });
+
+        // wrap table clone (this is our "sticky table header" now)
+        that.$tableClone.wrap('<div class="sticky-table-header"/>');
+        that.$stickyTableHeader = that.$tableClone.parent();
+
+        // give the sticky table header same height as original
+        that.$stickyTableHeader.css('height', that.$thead.height() + 2);
+
+        //insert sticky table header
+        if($('html').hasClass('lt-ie10')){
+            that.$tableWrapper.prepend(that.$stickyTableHeader);
+        } else {
+            that.$table.before(that.$stickyTableHeader);
+        }
+
+        // var bodyRowsClone = $(tableClone).find('tbody').find('tr');
+
+        // bind scroll and resize with updateStickyTableHeader
+        $(window).bind('scroll resize', function(){
+            $.proxy(that.updateStickyTableHeader(), that);
+        });
+
+        $(that.$tableScrollWrapper).bind('scroll', function(){
+            $.proxy(that.updateStickyTableHeader(), that);
+        });
+    };
+
+    // Help function for sticky table header
+    ResponsiveTable.prototype.updateStickyTableHeader = function() {
+        var that              = this,
+          top               = 0,
+          offsetTop         = that.$table.offset().top,
+          scrollTop         = $(window).scrollTop() -1, //-1 to accomodate for top border
+          maxTop            = that.$table.height() - that.$stickyTableHeader.height(),
+          rubberBandOffset  = (scrollTop + $(window).height()) - $(document).height(),
+        //          useFixedSolution  = that.$table.parent().prop('scrollWidth') === that.$table.parent().width();
+          useFixedSolution  = !that.iOS,
+          navbarHeight      = 0;
+
+        //Is there a fixed navbar?
+        if($(that.options.fixedNavbar).length) {
+            var $navbar = $(that.options.fixedNavbar).first();
+            navbarHeight = $navbar.height();
+            scrollTop = scrollTop + navbarHeight;
+        }
+
+        var shouldBeVisible   = (scrollTop > offsetTop) && (scrollTop < offsetTop + that.$table.height());
+
+        if(useFixedSolution) {
+            that.$stickyTableHeader.scrollLeft(that.$tableScrollWrapper.scrollLeft());
+
+            //add fixedSolution class
+            that.$stickyTableHeader.addClass('fixed-solution');
+
+            // Calculate top property value (-1 to accomodate for top border)
+            top = navbarHeight - 1;
+
+            // When the about to scroll past the table, move sticky table head up
+            if(((scrollTop - offsetTop) > maxTop)){
+                top -= ((scrollTop - offsetTop) - maxTop);
+                that.$stickyTableHeader.addClass('border-radius-fix');
+            } else {
+                that.$stickyTableHeader.removeClass('border-radius-fix');
+            }
+
+            if (shouldBeVisible) {
+                //show sticky table header and update top and width.
+                that.$stickyTableHeader.css({ 'visibility': 'visible', 'top': top + 'px', 'width': that.$tableScrollWrapper.innerWidth() + 'px'});
+
+                //no more stuff to do - return!
+                return;
+            } else {
+                //hide sticky table header and reset width
+                that.$stickyTableHeader.css({'visibility': 'hidden', 'width': 'auto' });
+            }
+
+        } else { // alternate method
+            //remove fixedSolution class
+            that.$stickyTableHeader.removeClass('fixed-solution');
+
+            //animation duration
+            var animationDuration = 400;
+
+            // Calculate top property value (-1 to accomodate for top border)
+            top = scrollTop - offsetTop - 1;
+
+            // Make sure the sticky table header doesn't slide up/down too far.
+            if(top < 0) {
+                top = 0;
+            } else if (top > maxTop) {
+                top = maxTop;
+            }
+
+            // Accomandate for rubber band effect
+            if(rubberBandOffset > 0) {
+                top = top - rubberBandOffset;
+            }
+
+            if (shouldBeVisible) {
+                //show sticky table header (animate repositioning)
+                that.$stickyTableHeader.css({ 'visibility': 'visible' });
+                that.$stickyTableHeader.animate({ 'top': top + 'px' }, animationDuration);
+
+                // hide original table head
+                that.$thead.css({ 'visibility': 'hidden' });
+
+            } else {
+
+                that.$stickyTableHeader.animate({ 'top': '0' }, animationDuration, function(){
+                    // show original table head
+                    that.$thead.css({ 'visibility': 'visible' });
+
+                    // hide sticky table head
+                    that.$stickyTableHeader.css({ 'visibility': 'hidden' });
+                });
+            }
+        }
+    };
+
+    // Setup header cells
+    ResponsiveTable.prototype.setupHdrCells = function() {
+        var that = this;
+
+        // for each header column
+        that.$hdrCells.each(function(i){
+            var $th = $(this),
+                id = $th.prop('id');
+          
+      var thText;
+          
+              if ( $th.hasClass('midget') ) {
+                thText = 'Market overview';
+              } else {
+                thText = $th.text();
+              }
+            // assign an id to each header, if none is in the markup
+            if (!id) {
+                id = that.idPrefix + i;
+                $th.prop('id', id);
+            }
+
+            if(thText === ''){
+                thText = $th.attr('data-col-name');
+            }
+
+            // create the hide/show toggle for the current column
+            if ( $th.is('[data-priority]') ) {
+                          
+              var $toggle = $ ('<li class="checkbox-row ' + ( ( i>= 8 && i != that.$hdrCells.length-1  ) ? 'more' : '' ) + '"><input type="checkbox" name="toggle-'+id+'" id="toggle-'+id+'" value="'+id+'" /> <label for="toggle-'+id+'">'+ thText +'</label></li>');
+           
+                           
+              if ( i == 10 ) {
+                  that.$dropdownContainer.append( '<li class="more-link" onclick="$(\'.more, .more-link\').toggle();">\(show more\)</li>'  );
+              }
+            
+                var $checkbox = $toggle.find('input');
+
+                that.$dropdownContainer.append($toggle);
+
+                $toggle.click(function(){
+                    // console.log("cliiiick!");
+                    $checkbox.prop('checked', !$checkbox.prop('checked'));
+                    $checkbox.trigger('change');
+                });
+
+                //Freakin' IE fix
+                if ($('html').hasClass('lt-ie9')) {
+                    $checkbox.click(function() {
+                        $(this).trigger('change');
+                    });
+                }
+
+                $toggle.find('label').click(function(event){
+                    event.stopPropagation();
+                });
+
+                $toggle.find('input')
+                    .click(function(event){
+                        event.stopPropagation();
+                    })
+                .change(function(){ // bind change event on checkbox
+                    var $checkbox = $(this),
+                        val = $checkbox.val(),
+                        //all cells under the column, including the header and its clone
+                        $cells = that.$tableWrapper.find('#' + val + ', #' + val + '-clone, [data-columns~='+ val +']');
+
+                    //if display-all is on - save state and carry on
+                    if(that.$table.hasClass('display-all')){
+                        //save state
+                        $.proxy(that.preserveDisplayAll(), that);
+                        //remove display all class
+                        that.$table.removeClass('display-all');
+                        if(that.$tableClone){
+                            that.$tableClone.removeClass('display-all');
+                        }
+                        //switch off button
+                        that.$displayAllBtn.removeClass('btn-primary');
+                    }
+
+                    // loop through the cells
+                    $cells.each(function(){
+                        var $cell = $(this);
+
+                        // is the checkbox checked now?
+                        if ($checkbox.is(':checked')) {
+
+                            // if the cell was already visible, it means its original colspan was >1
+                            // so let's increment the colspan
+                            if($cell.css('display') !== 'none'){
+                                $cell.prop('colSpan', parseInt($cell.prop('colSpan')) + 1);
+                            }
+
+                            // show cell
+                            $cell.show();
+                            $cell.css({backgroundColor: "#ffffcc"});
+                            $cell.animate({backgroundColor: "#ffffff", }, 500);
+
+                        }
+                      // checkbox has been unchecked
+                      else {
+                            // decrement colSpan if it's not 1 (because colSpan should not be 0)
+                            if(parseInt($cell.prop('colSpan'))>1){
+                                $cell.prop('colSpan', parseInt($cell.prop('colSpan')) - 1);
+                            }
+                            // otherwise, hide the cell
+                            else {
+                                $cell.hide();
+                            }
+                        }
+                    });
+                })
+                .bind('updateCheck', function(){
+                    if ( $th.css('display') !== 'none') {
+                        $(this).prop('checked', true);
+                    }
+                    else {
+                        $(this).prop('checked', false);
+                    }
+                })
+                .trigger('updateCheck');
+            } // end if
+        }); // end hdrCells loop 
+    };
+
+    // Setup standard cells
+    // assign matching "data-columns" attributes to the associated cells "(cells with colspan>1 has multiple columns).
+    ResponsiveTable.prototype.setupStandardCells = function() {
+        var that = this;
+
+        // for each body rows
+        that.$bodyRows.each(function(){
+            var idStart = 0;
+
+            // for each cell
+            $(this).find('th, td').each(function(){
+                var $cell = $(this);
+                var columnsAttr = '';
+
+                var colSpan = $cell.prop('colSpan');
+
+                var numOfHidden = 0;
+                // loop through columns that the cell spans over
+                for (var k = idStart; k < (idStart + colSpan); k++) {
+                    // add column id
+                    columnsAttr = columnsAttr + ' ' + that.idPrefix + k;
+
+                    // get column header
+                    var $colHdr = that.$tableScrollWrapper.find('#' + that.idPrefix + k);
+
+                    // copy data-priority attribute from column header
+                    var dataPriority = $colHdr.attr('data-priority');
+                    if (dataPriority) { $cell.attr('data-priority', dataPriority); }
+
+                    if($colHdr.css('display')==='none'){
+                        numOfHidden++;
+                    }
+
+                }
+
+                // if colSpan is more than 1
+                if(colSpan > 1) {
+                    //give it the class 'spn-cell';
+                    $cell.addClass('spn-cell');
+
+                    // if one of the columns that the cell belongs to is visible then show the cell
+                    if(numOfHidden !== colSpan){
+                        $cell.show();
+                    } else {
+                        $cell.hide(); //just in case
+                    }
+                }
+
+                //update colSpan to match number of visible columns that i belongs to
+                $cell.prop('colSpan',Math.max((colSpan - numOfHidden),1));
+
+                //remove whitespace in begining of string.
+                columnsAttr = columnsAttr.substring(1);
+
+                //set attribute to cell
+                $cell.attr('data-columns', columnsAttr);
+
+                //increment idStart with the current cells colSpan.
+                idStart = idStart + colSpan;
+            });
+        });
+    };
+
+    // Update colspan and visibility of spanning cells
+    ResponsiveTable.prototype.updateSpanningCells = function() {
+        var that = this;
+
+        // iterate through cells with class 'spn-cell'
+        that.$table.find('.spn-cell').each( function(){
+            var $cell = $(this);
+            var columnsAttr = $cell.attr('data-columns').split(' ');
+
+            var colSpan = columnsAttr.length;
+            var numOfHidden = 0;
+            for (var i = 0; i < colSpan; i++) {
+                if($('#' + columnsAttr[i]).css('display')==='none'){
+                    numOfHidden++;
+                }
+            }
+
+            // if one of the columns that the cell belongs to is visible then show the cell
+            if(numOfHidden !== colSpan){
+                $cell.show();
+            } else {
+                $cell.hide(); //just in case
+            }
+
+            // console.log('numOfHidden: ' + numOfHidden);
+            // console.log("new colSpan:" +Math.max((colSpan - numOfHidden),1));
+
+            //update colSpan to match number of visible columns that i belongs to
+            $cell.prop('colSpan',Math.max((colSpan - numOfHidden),1));
+        });
+    };
+
+    // RESPONSIVE TABLE PLUGIN DEFINITION
+    // ===========================
+
+    var old = $.fn.responsiveTable;
+
+    $.fn.responsiveTable = function (option) {
+        return this.each(function () {
+            var $this   = $(this);
+            var data    = $this.data('responsiveTable');
+            var options = $.extend({}, ResponsiveTable.DEFAULTS, $this.data(), typeof option === 'object' && option);
+
+            if(options.pattern === '') {
+                return;
+            }
+
+            if (!data) {
+                $this.data('responsiveTable', (data = new ResponsiveTable(this, options)));
+            }
+            if (typeof option === 'string') {
+                data[option]();
+            }
+        });
+    };
+
+    $.fn.responsiveTable.Constructor = ResponsiveTable;
+
+
+    // RESPONSIVE TABLE NO CONFLICT
+    // =====================
+
+    $.fn.responsiveTable.noConflict = function () {
+        $.fn.responsiveTable = old;
+        return this;
+    };
+
+    // RESPONSIVE TABLE DATA-API
+    // ==================
+
+    $(document).on('ready.responsive-table.data-api', function () {
+        $('[data-pattern]').each(function () {
+            var $tableScrollWrapper = $(this);
+            $tableScrollWrapper.responsiveTable($tableScrollWrapper.data());
+        });
+    });
+
+
+    // DROPDOWN
+    // ==========================
+
+    // Prevent dropdown from closing when toggling checkbox
+    $(document).on('click.dropdown.data-api', '.dropdown-menu .checkbox-row', function (e) {
+        e.stopPropagation();
+    });
+
+    // FEATURE DETECTION (instead of Modernizr)
+    // ==========================
+
+    // media queries
+    function mediaQueriesSupported() {
+        return (typeof window.matchMedia !== 'undefined' || typeof window.msMatchMedia !== 'undefined' || typeof window.styleMedia !== 'undefined');
+    }
+
+    // touch
+    function hasTouch() {
+        return 'ontouchstart' in window;
+    }
+
+    // Checks if current browser is on IOS.
+    function isIOS() {
+        return !!(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i));
+    }
+
+
+    $(document).ready(function() {
+        // Change `no-js` to `js`
+        $('html').removeClass('no-js').addClass('js');
+
+        // Add mq/no-mq class to html
+        if(mediaQueriesSupported()) {
+            $('html').addClass('mq');
+        } else {
+            $('html').addClass('no-mq');
+        }
+
+        // Add touch/no-touch class to html
+        if(hasTouch()) {
+            $('html').addClass('touch');
+        } else {
+            $('html').addClass('no-touch');
+        }
+      
+      
+    });
+})(jQuery);
+
+</script>
+
+</body>
+
+</html>

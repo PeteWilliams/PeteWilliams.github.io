@@ -1,0 +1,844 @@
+<html class="js mq no-touch"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta charset="utf-8">
+
+
+
+<style>
+  
+  body table {
+    font-size: 13px;
+  }
+  
+  .table-responsive td, .table-responsive th {
+    text-align: right;
+  }
+  
+.table-container {
+	width: 100%;
+	overflow: truncate;
+	float: left;
+}
+
+.table-responsive {
+	border-radius:0;
+	width: auto;
+}
+
+.table-responsive[data-pattern="priority-columns"] {
+	width: auto;
+}
+
+.btn-toolbar {
+	display: none;
+}
+
+#menu {
+	display: none;
+	height: 100%;
+	width: 160px;
+	float: left;
+	padding: 5px;
+}
+
+#menu .dropdown-menu>li.checkbox-row {
+	padding:0;
+}
+
+#menu .dropdown-menu{
+	display:	block;
+	position:	static;
+	border:		none;
+	float:		none;
+	min-width:	100%;
+	box-shadow: none;
+}
+
+
+#menu .more {
+	display: none;
+}
+
+table.first-col {
+	float: left;
+	width:	160px;
+    font-weight: bold;
+}
+
+table.first-col td, table.first-col th {
+    border: 1px solid #ddd;
+    border-top: 1px solid #ddd !important;
+    border-right: none;
+}
+ 
+th {
+    min-width: 24px !important;
+    max-width: 48px !important;
+}
+
+th.medium {
+    max-width: 62px !important;
+}
+
+th.widget {
+  max-width: none;
+}
+  
+  td.midget {
+   position: relative; 
+    min-width: 83px;
+  }
+  
+td.midget div {
+    background-color: #ccc;
+    border: 2px solid #aaa;
+    color: #969696;
+    font-size: 16px;
+    font-weight: bold;
+}
+  
+  div.ticket {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  
+  div.chart {
+    height: 438px;
+    width: 100%;
+    min-width: 500px;
+  }
+  
+  div.chart img {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+table, div.chart {
+  height: 100%;
+
+}
+
+  @media screen and (min-width: 960px) {
+     table tr:first-child td {
+      background-color: #efefef;
+    }
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="table-container">
+<div onclick="$(&#39;#menu&#39;).animate({width: &#39;toggle&#39;});"><span style="font-size:24px">⚙</span> menu</div>
+
+<div id="menu" style="display: none;">
+<ul class="dropdown-menu"><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-0" id="toggle-id92240d18-col-0" value="id92240d18-col-0"> <label for="toggle-id92240d18-col-0">Sell</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-1" id="toggle-id92240d18-col-1" value="id92240d18-col-1"> <label for="toggle-id92240d18-col-1">Buy</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-2" id="toggle-id92240d18-col-2" value="id92240d18-col-2"> <label for="toggle-id92240d18-col-2">Change: %</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-3" id="toggle-id92240d18-col-3" value="id92240d18-col-3"> <label for="toggle-id92240d18-col-3">points</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-4" id="toggle-id92240d18-col-4" value="id92240d18-col-4"> <label for="toggle-id92240d18-col-4">High</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-5" id="toggle-id92240d18-col-5" value="id92240d18-col-5"> <label for="toggle-id92240d18-col-5">Low</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-6" id="toggle-id92240d18-col-6" value="id92240d18-col-6"> <label for="toggle-id92240d18-col-6">Spread</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-7" id="toggle-id92240d18-col-7" value="id92240d18-col-7"> <label for="toggle-id92240d18-col-7">RSI</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-8" id="toggle-id92240d18-col-8" value="id92240d18-col-8"> <label for="toggle-id92240d18-col-8">Last update</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-9" id="toggle-id92240d18-col-9" value="id92240d18-col-9"> <label for="toggle-id92240d18-col-9">Volume</label></li><li class="more-link" onclick="$(&#39;.more, .more-link&#39;).toggle();">(show more)</li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-10" id="toggle-id92240d18-col-10" value="id92240d18-col-10"> <label for="toggle-id92240d18-col-10">MACD</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-11" id="toggle-id92240d18-col-11" value="id92240d18-col-11"> <label for="toggle-id92240d18-col-11">Moving average</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-12" id="toggle-id92240d18-col-12" value="id92240d18-col-12"> <label for="toggle-id92240d18-col-12">Momentum</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-13" id="toggle-id92240d18-col-13" value="id92240d18-col-13"> <label for="toggle-id92240d18-col-13">Consecutive candles</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-14" id="toggle-id92240d18-col-14" value="id92240d18-col-14"> <label for="toggle-id92240d18-col-14">Standard deviation</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-15" id="toggle-id92240d18-col-15" value="id92240d18-col-15"> <label for="toggle-id92240d18-col-15">Market cap</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-16" id="toggle-id92240d18-col-16" value="id92240d18-col-16"> <label for="toggle-id92240d18-col-16">52wk high</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-17" id="toggle-id92240d18-col-17" value="id92240d18-col-17"> <label for="toggle-id92240d18-col-17">52wk high date</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-18" id="toggle-id92240d18-col-18" value="id92240d18-col-18"> <label for="toggle-id92240d18-col-18">52wk low</label></li><li class="checkbox-row more"><input type="checkbox" name="toggle-id92240d18-col-19" id="toggle-id92240d18-col-19" value="id92240d18-col-19"> <label for="toggle-id92240d18-col-19">52wk low date</label></li><li class="checkbox-row "><input type="checkbox" name="toggle-id92240d18-col-20" id="toggle-id92240d18-col-20" value="id92240d18-col-20"> <label for="toggle-id92240d18-col-20">Market overview</label></li></ul></div>
+
+<table class="table first-col">
+ <thead>
+ 	<tr><th>Market name</th>
+ </tr></thead>
+ <tbody><tr>
+  <td>Apple</td>
+ </tr>
+ <tr>
+  <td>Facebook</td>
+ </tr>
+ <tr>
+  <td>Wall Street</td>
+ </tr>
+ <tr>
+  <td>Amazon</td>
+ </tr>
+ <tr>
+  <td>Tesla</td>
+ </tr>
+ <tr>
+  <td>Google</td>
+ </tr>
+ <tr>
+  <td>FTSE 100</td>
+ </tr>
+ <tr>
+  <td>Vodafone</td>
+ </tr>
+ <tr>
+  <td>BP</td>
+ </tr>
+ <tr>
+  <td>Lloyds</td>
+ </tr>
+ <tr>
+  <td>Germany 30</td>
+ </tr>
+ <tr>
+  <td>EUR USD</td>
+ </tr>
+ <tr>
+  <td>EUR GBP</td>
+ </tr>
+  </tbody></table>
+
+
+
+<div class="table-wrapper"><div class="btn-toolbar"><div class="btn-group dropdown-btn-group pull-right"><button class="btn btn-default">Display all</button><button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Display <span class="caret"></span></button></div></div><div class="table-responsive" data-pattern="priority-columns">
+<div class="sticky-table-header fixed-solution" style="height: 37px; visibility: hidden; width: auto;">
+  <table class="table" id="id92240d18-clone">
+ <thead>
+  <tr><th data-priority="1" id="id92240d18-col-0-clone">Sell</th>
+  <th data-priority="2" id="id92240d18-col-1-clone">Buy</th>
+  <th data-priority="1" id="id92240d18-col-2-clone">Change: %</th>
+  <th data-priority="3" class="medium" id="id92240d18-col-3-clone" style="display: none;">points</th>
+  <th data-priority="3" id="id92240d18-col-4-clone" style="display: none;">High</th>
+  <th data-priority="3" id="id92240d18-col-5-clone" style="display: none;">Low</th>
+  <th data-priority="4" id="id92240d18-col-6-clone">Spread</th>
+  <th data-priority="2" id="id92240d18-col-7-clone">RSI</th>
+  <th data-priority="7" id="id92240d18-col-8-clone">Last update</th>
+  <th data-priority="7" id="id92240d18-col-9-clone">Volume</th>
+  <th data-priority="7" id="id92240d18-col-10-clone">MACD</th>
+  <th data-priority="7" id="id92240d18-col-11-clone">Moving average</th>
+  <th data-priority="7" id="id92240d18-col-12-clone">Momentum</th>
+  <th data-priority="7" class="medium" id="id92240d18-col-13-clone">Consecutive candles</th>
+  <th data-priority="7" class="medium" id="id92240d18-col-14-clone">Standard deviation</th>
+  <th data-priority="7" id="id92240d18-col-15-clone">Market cap</th>
+  <th data-priority="7" id="id92240d18-col-16-clone">52wk high</th>
+  <th data-priority="7" id="id92240d18-col-17-clone">52wk high date</th>
+  <th data-priority="7" id="id92240d18-col-18-clone">52wk low</th>
+  <th data-priority="7" id="id92240d18-col-19-clone">52wk low date</th>
+  <th data-priority="5" class="midget" id="id92240d18-col-20-clone">
+      <select id="market-clone">
+        <option value="midget">Market overview</option>
+        <option value="ticket">Ticket only</option>
+        <option value="chart">Chart only</option>
+        <option value="none">No market preview</option>
+    </select>
+    </th>
+ </tr></thead>
+ <tbody><tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">851.8</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">853.8</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">5.45</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">0.64</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">825.8</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">868.8</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">73</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+   <td rowspan="14" class="midget" data-priority="5" colspan="1" data-columns="id92240d18-col-20">
+       <div class="chart" style="display: block;">
+        <img src="prototype2_files/images/chart.png" />
+       </div>
+     <div class="ticket" style="display: block;">
+        <img src="prototype2_files/images/ticket.png" />
+     </div>
+   </td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">740.3</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">742.3</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-0.74</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-0.10</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">712.3</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">755.3</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">24</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">16317.2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">16319.2</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-1039.41</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-6.37</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">16403.31</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">16222.99</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">63</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">501.4</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">503.4</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">42.47</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">8.47</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">519.4</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">491.4</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">35</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">295.8</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">297.8</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-23.28</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-7.87</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">317.8</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">286.8</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">4</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">36</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">0.9</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">2.9</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">0.04</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">4.90</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">25.9</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">20.9</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">76</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">6022.5</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">6024.5</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-260.77</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-4.33</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">6084.39</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">5926.8</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">57</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">370.6</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">372.6</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-34.39</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-9.28</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">380.6</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">400.6</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">48</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">396</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">398</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-24.31</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-6.14</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">412</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">392</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">46</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">842.6</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">844.6</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-50.56</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-6.00</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">839.6</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">836.6</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">68</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">9670.5</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">9672.5</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">239.83</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">2.48</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">9735.8</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">9652.06</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">96</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">1.12408</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">1.12428</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-0.05</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-5.44</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">1.12768</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">1.11827</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">3</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">84</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">0.72798</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">0.72818</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-0.04</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-5.31</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">0.73903</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">0.72263</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">89</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+</tbody></table></div><table class="table">
+ <thead>
+  <tr><th data-priority="1" id="id92240d18-col-0">Sell</th>
+  <th data-priority="2" id="id92240d18-col-1">Buy</th>
+  <th data-priority="1" id="id92240d18-col-2">Change: %</th>
+  <th data-priority="3" class="medium" id="id92240d18-col-3" style="display: none;">points</th>
+  <th data-priority="3" id="id92240d18-col-4" style="display: none;">High</th>
+  <th data-priority="3" id="id92240d18-col-5" style="display: none;">Low</th>
+  <th data-priority="4" id="id92240d18-col-6">Spread</th>
+  <th data-priority="2" id="id92240d18-col-7">RSI</th>
+  <th data-priority="7" id="id92240d18-col-8">Last update</th>
+  <th data-priority="7" id="id92240d18-col-9">Volume</th>
+  <th data-priority="7" id="id92240d18-col-10">MACD</th>
+  <th data-priority="7" id="id92240d18-col-11">Moving average</th>
+  <th data-priority="7" id="id92240d18-col-12">Momentum</th>
+  <th data-priority="7" class="medium" id="id92240d18-col-13">Consecutive candles</th>
+  <th data-priority="7" class="medium" id="id92240d18-col-14">Standard deviation</th>
+  <th data-priority="7" id="id92240d18-col-15">Market cap</th>
+  <th data-priority="7" id="id92240d18-col-16">52wk high</th>
+  <th data-priority="7" id="id92240d18-col-17">52wk high date</th>
+  <th data-priority="7" id="id92240d18-col-18">52wk low</th>
+  <th data-priority="7" id="id92240d18-col-19">52wk low date</th>
+  <th data-priority="5" class="midget" id="id92240d18-col-20">
+      <select id="market">
+        <option value="midget">Market overview</option>
+        <option value="ticket">Ticket only</option>
+        <option value="chart">Chart only</option>
+        <option value="none">No market preview</option>
+    </select>
+    </th>
+ </tr></thead>
+ <tbody><tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">851.8</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">853.8</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">5.45</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">0.64</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">825.8</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">868.8</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">73</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+   <td rowspan="14" class="midget" data-priority="5" colspan="1" data-columns="id92240d18-col-20">
+       <div class="chart" style="display: block;">
+        <img src="prototype2_files/images/chart.png" />
+       </div>
+     <div class="ticket" style="display: block;">
+        <img src="prototype2_files/images/ticket.png" />
+     </div>
+   </td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">740.3</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">742.3</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-0.74</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-0.10</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">712.3</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">755.3</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">24</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">16317.2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">16319.2</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-1039.41</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-6.37</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">16403.31</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">16222.99</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">63</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">501.4</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">503.4</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">42.47</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">8.47</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">519.4</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">491.4</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">35</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">295.8</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">297.8</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-23.28</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-7.87</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">317.8</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">286.8</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">4</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">36</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">0.9</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">2.9</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">0.04</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">4.90</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">25.9</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">20.9</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">76</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">6022.5</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">6024.5</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-260.77</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-4.33</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">6084.39</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">5926.8</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">57</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">370.6</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">372.6</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-34.39</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-9.28</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">380.6</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">400.6</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">48</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">396</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">398</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-24.31</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-6.14</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">412</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">392</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">2</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">46</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">842.6</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">844.6</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-50.56</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-6.00</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">839.6</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">836.6</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">68</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">9670.5</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">9672.5</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">239.83</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">2.48</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">9735.8</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">9652.06</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">96</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">1.12408</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">1.12428</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-0.05</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-5.44</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">1.12768</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">1.11827</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">3</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">84</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+ <tr>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-0">0.72798</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-1">0.72818</td>
+  <td data-priority="1" colspan="1" data-columns="id92240d18-col-2">-0.04</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-3" style="display: none;">-5.31</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-4" style="display: none;">0.73903</td>
+  <td data-priority="3" colspan="1" data-columns="id92240d18-col-5" style="display: none;">0.72263</td>
+  <td data-priority="4" colspan="1" data-columns="id92240d18-col-6">1</td>
+  <td data-priority="2" colspan="1" data-columns="id92240d18-col-7">89</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-8">12/10/2015 09:00</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-9">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-10">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-11">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-12">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-13">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-14">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-15">3</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-16">4</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-17">1</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-18">2</td>
+  <td data-priority="7" colspan="1" data-columns="id92240d18-col-19">3</td>
+ </tr>
+</tbody></table>
+
+</div></div>
+
+</div>

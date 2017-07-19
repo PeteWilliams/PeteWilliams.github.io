@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://127.0.0.1:32767/15.19.37/home__1_.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Home (1)</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="styles.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="./prototype2_files/jquery-ui-themes.css" type="text/css" rel="stylesheet">
+    <link href="./prototype2_files/axure_rp_page.css" type="text/css" rel="stylesheet">
+    <link href="./prototype2_files/styles.css" type="text/css" rel="stylesheet">
+    <link href="./prototype2_files/styles(1).css" type="text/css" rel="stylesheet">
+    <script src="./prototype2_files/jquery-1.7.1.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="./prototype2_files/jquery-ui-1.8.10.custom.min.js"></script>
+    <script src="./prototype2_files/axQuery.js"></script>
+    <script src="./prototype2_files/globals.js"></script>
+    <script src="./prototype2_files/axutils.js"></script>
+    <script src="./prototype2_files/annotation.js"></script>
+    <script src="./prototype2_files/axQuery.std.js"></script>
+    <script src="./prototype2_files/doc.js"></script>
+    <script src="./prototype2_files/document.js"></script>
+    <script src="./prototype2_files/messagecenter.js"></script>
+    <script src="./prototype2_files/events.js"></script>
+    <script src="./prototype2_files/recording.js"></script>
+    <script src="./prototype2_files/action.js"></script>
+    <script src="./prototype2_files/expr.js"></script>
+    <script src="./prototype2_files/geometry.js"></script>
+    <script src="./prototype2_files/flyout.js"></script>
+    <script src="./prototype2_files/ie.js"></script>
+    <script src="./prototype2_files/model.js"></script>
+    <script src="./prototype2_files/repeater.js"></script>
+    <script src="./prototype2_files/sto.js"></script>
+    <script src="./prototype2_files/utils.temp.js"></script>
+    <script src="./prototype2_files/variables.js"></script>
+    <script src="./prototype2_files/drag.js"></script>
+    <script src="./prototype2_files/move.js"></script>
+    <script src="./prototype2_files/visibility.js"></script>
+    <script src="./prototype2_files/style.js"></script>
+    <script src="./prototype2_files/adaptive.js"></script>
+    <script src="./prototype2_files/tree.js"></script>
+    <script src="./prototype2_files/init.temp.js"></script>
+    <script src="./prototype2_files/data.js"></script>
+    <script src="./prototype2_files/legacy.js"></script>
+    <script src="./prototype2_files/viewer.js"></script>
+    <script src="./prototype2_files/math.js"></script>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+
+    /*!
+ * Responsive Tables v5.0.4 (http://gergeo.se/RWD-Table-Patterns)
+ * This is an awesome solution for responsive tables with complex data.
+ * Authors: Nadan Gergeo <nadan.gergeo@gmail.com> (www.gergeo.se) & Maggie Wachs (www.filamentgroup.com)
+ * Licensed under MIT (https://github.com/nadangergeo/RWD-Table-Patterns/blob/master/LICENSE-MIT)
+ */
+(function ($) {
+    'use strict';
+
+    // RESPONSIVE TABLE CLASS DEFINITION
+    // ==========================
+
+    var ResponsiveTable = function(element, options) {
+        var that = this;
+
+        this.options = options;
+        this.$tableWrapper = null; //defined later in wrapTable
+        this.$tableScrollWrapper = $(element); //defined later in wrapTable
+        this.$table = $(element).find('table');
+
+        if(this.$table.length !== 1) {
+            throw new Error('Exactly one table is expected in a .table-responsive div.');
+        }
+
+        //apply pattern option as data-attribute, in case it was set via js
+        this.$tableScrollWrapper.attr('data-pattern', this.options.pattern);
+
+        //if the table doesn't have a unique id, give it one.
+        //The id will be a random hexadecimal value, prefixed with id.
+        //Used for triggers with displayAll button.
+        this.id = this.$table.prop('id') || this.$tableScrollWrapper.prop('id') || 'id' + Math.random().toString(16).slice(2);
+
+        this.$tableClone = null; //defined farther down
+        this.$stickyTableHeader = null; //defined farther down
+
+        //good to have - for easy access
+        this.$thead = this.$table.find('thead');
+        this.$tbody = this.$table.find('tbody');
+        this.$hdrCells = this.$thead.find('th');
+        this.$bodyRows = this.$tbody.find('tr');
+
+        //toolbar and buttons
+        this.$btnToolbar = null; //defined farther down
+        this.$dropdownGroup = null; //defined farther down
+        this.$dropdownBtn = null; //defined farther down
+        this.$dropdownContainer = null; //defined farther down
+
+        this.$displayAllBtn = null; //defined farther down
+
+        this.$focusGroup = null; //defined farther down
+        this.$focusBtn = null; //defined farther down
+
+        //misc
+        this.displayAllTrigger = 'display-all-' + this.id + '.responsive-table';
+        this.idPrefix = this.id + '-col-';
+
+        // Check if iOS
+        // property to save performance
+        this.iOS = isIOS();
+      
+        // Setup table
+        // -------------------------
+      
+        //wrap table
+        this.wrapTable();
+
+        //create toolbar with buttons
+        this.createButtonToolbar();
+
+        // Setup cells
+        // -------------------------
+
+        //setup header cells
+        this.setupHdrCells();
+
+        //setup standard cells
+        this.setupStandardCells();
+
+        //create sticky table head
+        if(this.options.stickyTableHeader){
+            this.createStickyTableHeader();
+        }
+
+        // hide toggle button if the list is empty
+        if(this.$dropdownContainer.is(':empty')){
+            this.$dropdownGroup.hide();
+        }
+
+        // Event binding
+        // -------------------------
+
+        // on orientchange, resize and displayAllBtn-click
+        $(window).bind('orientationchange resize ' + this.displayAllTrigger, function(){
+
+            //update the inputs' checked status
+            that.$dropdownContainer.find('input').trigger('updateCheck');
+
+            //update colspan and visibility of spanning cells
+            $.proxy(that.updateSpanningCells(), that);
+
+        });
+    };
+
+    ResponsiveTable.DEFAULTS = {
+        pattern: 'priority-columns',
+        stickyTableHeader: true,
+        fixedNavbar: '.navbar-fixed-top',  // Is there a fixed navbar? The stickyTableHeader needs to know about it!
+        addDisplayAllBtn: true, // should it have a display-all button?
+        addFocusBtn: true,  // should it have a focus button?
+        focusBtnIcon: 'glyphicon glyphicon-screenshot'
+    };
+
+    // Wrap table
+    ResponsiveTable.prototype.wrapTable = function() {        
+        this.$tableScrollWrapper.wrap('<div class="table-wrapper"/>');
+        this.$tableWrapper = this.$tableScrollWrapper.parent();
+    };
+
+    // Create toolbar with buttons
+    ResponsiveTable.prototype.createButtonToolbar = function() {
+        var that = this;
+
+        this.$btnToolbar = $('<div class="btn-toolbar" />');
+
+        this.$dropdownGroup = $('<div class="btn-group dropdown-btn-group pull-right" />');
+        this.$dropdownBtn = $('<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Display <span class="caret"></span></button>');
+        this.$dropdownContainer = $('<ul class="dropdown-menu"/>');
+
+        // Focus btn
+        if(this.options.addFocusBtn) {
+            // Create focus btn group
+            this.$focusGroup = $('<div class="btn-group focus-btn-group" />');
+
+            // Create focus btn
+            this.$focusBtn = $('<button class="btn btn-default">Focus</button>');
+
+            if(this.options.focusBtnIcon) {
+                this.$focusBtn.prepend('<span class="' + this.options.focusBtnIcon + '"></span> ');
+            }
+
+            // Add btn to group
+            this.$focusGroup.append(this.$focusBtn);
+            // Add focus btn to toolbar
+            this.$btnToolbar.append(this.$focusGroup);
+
+            // bind click on focus btn
+            this.$focusBtn.click(function(){
+                $.proxy(that.activateFocus(), that);
+            });
+
+            // bind click on rows
+            this.$bodyRows.click(function(){
+                $.proxy(that.focusOnRow($(this)), that);
+            });
+        }
+
+         // Display-all btn
+        if(this.options.addDisplayAllBtn) {
+            // Create display-all btn
+            this.$displayAllBtn = $('<button class="btn btn-default">Display all</button>');
+            // Add display-all btn to dropdown-btn-group
+            this.$dropdownGroup.append(this.$displayAllBtn);
+
+            if (this.$table.hasClass('display-all')) {
+                // add 'btn-primary' class to btn to indicate that display all is activated
+                this.$displayAllBtn.addClass('btn-primary');
+            }
+
+            // bind click on display-all btn
+            this.$displayAllBtn.click(function(){
+                $.proxy(that.displayAll(null, true), that);
+            });
+        }
+
+        //add dropdown btn and menu to dropdown-btn-group
+        this.$dropdownGroup.append(this.$dropdownBtn).append(this.$dropdownContainer);
+        $('#menu').append(this.$dropdownContainer);
+
+        //add dropdown group to toolbar
+        this.$btnToolbar.append(this.$dropdownGroup);
+
+        // add toolbar above table
+        this.$tableScrollWrapper.before(this.$btnToolbar);
+    };
+
+    ResponsiveTable.prototype.clearAllFocus = function() {
+        this.$bodyRows.removeClass('unfocused');
+        this.$bodyRows.removeClass('focused');
+    };
+
+    ResponsiveTable.prototype.activateFocus = function() {
+        // clear all
+        this.clearAllFocus();
+
+        if(this.$focusBtn){
+            this.$focusBtn.toggleClass('btn-primary');
+        }
+
+        this.$table.toggleClass('focus-on');
+    };
+
+    ResponsiveTable.prototype.focusOnRow = function(row) {
+        // only if activated (.i.e the table has the class focus-on)
+        if(this.$table.hasClass('focus-on')) {
+            var alreadyFocused = $(row).hasClass('focused');
+
+            // clear all
+            this.clearAllFocus();
+
+            if(!alreadyFocused) {
+                this.$bodyRows.addClass('unfocused');
+                $(row).addClass('focused');
+            }
+        }
+    };
+
+    /**
+     * @param activate Forces the displayAll to be active or not. If anything else than bool, it will not force the state so it will toggle as normal.
+     * @param trigger Bool to indicate if the displayAllTrigger should be triggered.
+     */
+    ResponsiveTable.prototype.displayAll = function(activate, trigger) {
+        if(this.$displayAllBtn){
+            // add 'btn-primary' class to btn to indicate that display all is activated
+            this.$displayAllBtn.toggleClass('btn-primary', activate);
+        }
+
+        this.$table.toggleClass('display-all', activate);
+        if(this.$tableClone){
+            this.$tableClone.toggleClass('display-all', activate);
+        }
+
+        if(trigger) {
+            $(window).trigger(this.displayAllTrigger);
+        }
+    };
+
+    ResponsiveTable.prototype.preserveDisplayAll = function() {
+        var displayProp = 'table-cell';
+        if($('html').hasClass('lt-ie9')){
+            displayProp = 'inline';
+        }
+
+        $(this.$table).find('th, td').css('display', displayProp);
+        if(this.$tableClone){
+            $(this.$tableClone).find('th, td').css('display', displayProp);
+        }
+    };
+
+    ResponsiveTable.prototype.createStickyTableHeader = function() {
+        var that = this;
+
+        //clone table head
+        that.$tableClone = that.$table.clone();
+
+        //replace ids
+        that.$tableClone.prop('id', this.id + '-clone');
+        that.$tableClone.find('[id]').each(function() {
+            $(this).prop('id', $(this).prop('id') + '-clone');
+        });
+
+        // wrap table clone (this is our "sticky table header" now)
+        that.$tableClone.wrap('<div class="sticky-table-header"/>');
+        that.$stickyTableHeader = that.$tableClone.parent();
+
+        // give the sticky table header same height as original
+        that.$stickyTableHeader.css('height', that.$thead.height() + 2);
+
+        //insert sticky table header
+        if($('html').hasClass('lt-ie10')){
+            that.$tableWrapper.prepend(that.$stickyTableHeader);
+        } else {
+            that.$table.before(that.$stickyTableHeader);
+        }
+
+        // var bodyRowsClone = $(tableClone).find('tbody').find('tr');
+
+        // bind scroll and resize with updateStickyTableHeader
+        $(window).bind('scroll resize', function(){
+            $.proxy(that.updateStickyTableHeader(), that);
+        });
+
+        $(that.$tableScrollWrapper).bind('scroll', function(){
+            $.proxy(that.updateStickyTableHeader(), that);
+        });
+    };
+
+    // Help function for sticky table header
+    ResponsiveTable.prototype.updateStickyTableHeader = function() {
+        var that              = this,
+          top               = 0,
+          offsetTop         = that.$table.offset().top,
+          scrollTop         = $(window).scrollTop() -1, //-1 to accomodate for top border
+          maxTop            = that.$table.height() - that.$stickyTableHeader.height(),
+          rubberBandOffset  = (scrollTop + $(window).height()) - $(document).height(),
+        //          useFixedSolution  = that.$table.parent().prop('scrollWidth') === that.$table.parent().width();
+          useFixedSolution  = !that.iOS,
+          navbarHeight      = 0;
+
+        //Is there a fixed navbar?
+        if($(that.options.fixedNavbar).length) {
+            var $navbar = $(that.options.fixedNavbar).first();
+            navbarHeight = $navbar.height();
+            scrollTop = scrollTop + navbarHeight;
+        }
+
+        var shouldBeVisible   = (scrollTop > offsetTop) && (scrollTop < offsetTop + that.$table.height());
+
+        if(useFixedSolution) {
+            that.$stickyTableHeader.scrollLeft(that.$tableScrollWrapper.scrollLeft());
+
+            //add fixedSolution class
+            that.$stickyTableHeader.addClass('fixed-solution');
+
+            // Calculate top property value (-1 to accomodate for top border)
+            top = navbarHeight - 1;
+
+            // When the about to scroll past the table, move sticky table head up
+            if(((scrollTop - offsetTop) > maxTop)){
+                top -= ((scrollTop - offsetTop) - maxTop);
+                that.$stickyTableHeader.addClass('border-radius-fix');
+            } else {
+                that.$stickyTableHeader.removeClass('border-radius-fix');
+            }
+
+            if (shouldBeVisible) {
+                //show sticky table header and update top and width.
+                that.$stickyTableHeader.css({ 'visibility': 'visible', 'top': top + 'px', 'width': that.$tableScrollWrapper.innerWidth() + 'px'});
+
+                //no more stuff to do - return!
+                return;
+            } else {
+                //hide sticky table header and reset width
+                that.$stickyTableHeader.css({'visibility': 'hidden', 'width': 'auto' });
+            }
+
+        } else { // alternate method
+            //remove fixedSolution class
+            that.$stickyTableHeader.removeClass('fixed-solution');
+
+            //animation duration
+            var animationDuration = 400;
+
+            // Calculate top property value (-1 to accomodate for top border)
+            top = scrollTop - offsetTop - 1;
+
+            // Make sure the sticky table header doesn't slide up/down too far.
+            if(top < 0) {
+                top = 0;
+            } else if (top > maxTop) {
+                top = maxTop;
+            }
+
+            // Accomandate for rubber band effect
+            if(rubberBandOffset > 0) {
+                top = top - rubberBandOffset;
+            }
+
+            if (shouldBeVisible) {
+                //show sticky table header (animate repositioning)
+                that.$stickyTableHeader.css({ 'visibility': 'visible' });
+                that.$stickyTableHeader.animate({ 'top': top + 'px' }, animationDuration);
+
+                // hide original table head
+                that.$thead.css({ 'visibility': 'hidden' });
+
+            } else {
+
+                that.$stickyTableHeader.animate({ 'top': '0' }, animationDuration, function(){
+                    // show original table head
+                    that.$thead.css({ 'visibility': 'visible' });
+
+                    // hide sticky table head
+                    that.$stickyTableHeader.css({ 'visibility': 'hidden' });
+                });
+            }
+        }
+    };
+
+    // Setup header cells
+    ResponsiveTable.prototype.setupHdrCells = function() {
+        var that = this;
+
+        // for each header column
+        that.$hdrCells.each(function(i){
+            var $th = $(this),
+                id = $th.prop('id');
+          
+      var thText;
+          
+              if ( $th.hasClass('midget') ) {
+                thText = 'Market overview';
+              } else {
+                thText = $th.text();
+              }
+            // assign an id to each header, if none is in the markup
+            if (!id) {
+                id = that.idPrefix + i;
+                $th.prop('id', id);
+            }
+
+            if(thText === ''){
+                thText = $th.attr('data-col-name');
+            }
+
+            // create the hide/show toggle for the current column
+            if ( $th.is('[data-priority]') ) {
+                          
+              var $toggle = $ ('<li class="checkbox-row ' + ( ( i>= 8 && i != that.$hdrCells.length-1  ) ? 'more' : '' ) + '"><input type="checkbox" name="toggle-'+id+'" id="toggle-'+id+'" value="'+id+'" /> <label for="toggle-'+id+'">'+ thText +'</label></li>');
+           
+                           
+              if ( i == 10 ) {
+                  that.$dropdownContainer.append( '<li class="more-link" onclick="$(\'.more, .more-link\').toggle();">\(show more\)</li>'  );
+              }
+            
+                var $checkbox = $toggle.find('input');
+
+                that.$dropdownContainer.append($toggle);
+
+                $toggle.click(function(){
+                    // console.log("cliiiick!");
+                    $checkbox.prop('checked', !$checkbox.prop('checked'));
+                    $checkbox.trigger('change');
+                });
+
+                //Freakin' IE fix
+                if ($('html').hasClass('lt-ie9')) {
+                    $checkbox.click(function() {
+                        $(this).trigger('change');
+                    });
+                }
+
+                $toggle.find('label').click(function(event){
+                    event.stopPropagation();
+                });
+
+                $toggle.find('input')
+                    .click(function(event){
+                        event.stopPropagation();
+                    })
+                .change(function(){ // bind change event on checkbox
+                    var $checkbox = $(this),
+                        val = $checkbox.val(),
+                        //all cells under the column, including the header and its clone
+                        $cells = that.$tableWrapper.find('#' + val + ', #' + val + '-clone, [data-columns~='+ val +']');
+
+                    //if display-all is on - save state and carry on
+                    if(that.$table.hasClass('display-all')){
+                        //save state
+                        $.proxy(that.preserveDisplayAll(), that);
+                        //remove display all class
+                        that.$table.removeClass('display-all');
+                        if(that.$tableClone){
+                            that.$tableClone.removeClass('display-all');
+                        }
+                        //switch off button
+                        that.$displayAllBtn.removeClass('btn-primary');
+                    }
+
+                    // loop through the cells
+                    $cells.each(function(){
+                        var $cell = $(this);
+
+                        // is the checkbox checked now?
+                        if ($checkbox.is(':checked')) {
+
+                            // if the cell was already visible, it means its original colspan was >1
+                            // so let's increment the colspan
+                            if($cell.css('display') !== 'none'){
+                                $cell.prop('colSpan', parseInt($cell.prop('colSpan')) + 1);
+                            }
+
+                            // show cell
+                            $cell.show();
+                            $cell.css({backgroundColor: "#ffffcc"});
+                            $cell.animate({backgroundColor: "#ffffff", }, 500);
+
+                        }
+                      // checkbox has been unchecked
+                      else {
+                            // decrement colSpan if it's not 1 (because colSpan should not be 0)
+                            if(parseInt($cell.prop('colSpan'))>1){
+                                $cell.prop('colSpan', parseInt($cell.prop('colSpan')) - 1);
+                            }
+                            // otherwise, hide the cell
+                            else {
+                                $cell.hide();
+                            }
+                        }
+                    });
+                })
+                .bind('updateCheck', function(){
+                    if ( $th.css('display') !== 'none') {
+                        $(this).prop('checked', true);
+                    }
+                    else {
+                        $(this).prop('checked', false);
+                    }
+                })
+                .trigger('updateCheck');
+            } // end if
+        }); // end hdrCells loop 
+    };
+
+    // Setup standard cells
+    // assign matching "data-columns" attributes to the associated cells "(cells with colspan>1 has multiple columns).
+    ResponsiveTable.prototype.setupStandardCells = function() {
+        var that = this;
+
+        // for each body rows
+        that.$bodyRows.each(function(){
+            var idStart = 0;
+
+            // for each cell
+            $(this).find('th, td').each(function(){
+                var $cell = $(this);
+                var columnsAttr = '';
+
+                var colSpan = $cell.prop('colSpan');
+
+                var numOfHidden = 0;
+                // loop through columns that the cell spans over
+                for (var k = idStart; k < (idStart + colSpan); k++) {
+                    // add column id
+                    columnsAttr = columnsAttr + ' ' + that.idPrefix + k;
+
+                    // get column header
+                    var $colHdr = that.$tableScrollWrapper.find('#' + that.idPrefix + k);
+
+                    // copy data-priority attribute from column header
+                    var dataPriority = $colHdr.attr('data-priority');
+                    if (dataPriority) { $cell.attr('data-priority', dataPriority); }
+
+                    if($colHdr.css('display')==='none'){
+                        numOfHidden++;
+                    }
+
+                }
+
+                // if colSpan is more than 1
+                if(colSpan > 1) {
+                    //give it the class 'spn-cell';
+                    $cell.addClass('spn-cell');
+
+                    // if one of the columns that the cell belongs to is visible then show the cell
+                    if(numOfHidden !== colSpan){
+                        $cell.show();
+                    } else {
+                        $cell.hide(); //just in case
+                    }
+                }
+
+                //update colSpan to match number of visible columns that i belongs to
+                $cell.prop('colSpan',Math.max((colSpan - numOfHidden),1));
+
+                //remove whitespace in begining of string.
+                columnsAttr = columnsAttr.substring(1);
+
+                //set attribute to cell
+                $cell.attr('data-columns', columnsAttr);
+
+                //increment idStart with the current cells colSpan.
+                idStart = idStart + colSpan;
+            });
+        });
+    };
+
+    // Update colspan and visibility of spanning cells
+    ResponsiveTable.prototype.updateSpanningCells = function() {
+        var that = this;
+
+        // iterate through cells with class 'spn-cell'
+        that.$table.find('.spn-cell').each( function(){
+            var $cell = $(this);
+            var columnsAttr = $cell.attr('data-columns').split(' ');
+
+            var colSpan = columnsAttr.length;
+            var numOfHidden = 0;
+            for (var i = 0; i < colSpan; i++) {
+                if($('#' + columnsAttr[i]).css('display')==='none'){
+                    numOfHidden++;
+                }
+            }
+
+            // if one of the columns that the cell belongs to is visible then show the cell
+            if(numOfHidden !== colSpan){
+                $cell.show();
+            } else {
+                $cell.hide(); //just in case
+            }
+
+            // console.log('numOfHidden: ' + numOfHidden);
+            // console.log("new colSpan:" +Math.max((colSpan - numOfHidden),1));
+
+            //update colSpan to match number of visible columns that i belongs to
+            $cell.prop('colSpan',Math.max((colSpan - numOfHidden),1));
+        });
+    };
+
+    // RESPONSIVE TABLE PLUGIN DEFINITION
+    // ===========================
+
+    var old = $.fn.responsiveTable;
+
+    $.fn.responsiveTable = function (option) {
+        return this.each(function () {
+            var $this   = $(this);
+            var data    = $this.data('responsiveTable');
+            var options = $.extend({}, ResponsiveTable.DEFAULTS, $this.data(), typeof option === 'object' && option);
+
+            if(options.pattern === '') {
+                return;
+            }
+
+            if (!data) {
+                $this.data('responsiveTable', (data = new ResponsiveTable(this, options)));
+            }
+            if (typeof option === 'string') {
+                data[option]();
+            }
+        });
+    };
+
+    $.fn.responsiveTable.Constructor = ResponsiveTable;
+
+
+    // RESPONSIVE TABLE NO CONFLICT
+    // =====================
+
+    $.fn.responsiveTable.noConflict = function () {
+        $.fn.responsiveTable = old;
+        return this;
+    };
+
+    // RESPONSIVE TABLE DATA-API
+    // ==================
+
+    $(document).on('ready.responsive-table.data-api', function () {
+        $('[data-pattern]').each(function () {
+            var $tableScrollWrapper = $(this);
+            $tableScrollWrapper.responsiveTable($tableScrollWrapper.data());
+        });
+    });
+
+
+    // DROPDOWN
+    // ==========================
+
+    // Prevent dropdown from closing when toggling checkbox
+    $(document).on('click.dropdown.data-api', '.dropdown-menu .checkbox-row', function (e) {
+        e.stopPropagation();
+    });
+
+    // FEATURE DETECTION (instead of Modernizr)
+    // ==========================
+
+    // media queries
+    function mediaQueriesSupported() {
+        return (typeof window.matchMedia !== 'undefined' || typeof window.msMatchMedia !== 'undefined' || typeof window.styleMedia !== 'undefined');
+    }
+
+    // touch
+    function hasTouch() {
+        return 'ontouchstart' in window;
+    }
+
+    // Checks if current browser is on IOS.
+    function isIOS() {
+        return !!(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i));
+    }
+
+
+    $(document).ready(function() {
+        // Change `no-js` to `js`
+        $('html').removeClass('no-js').addClass('js');
+
+        // Add mq/no-mq class to html
+        if(mediaQueriesSupported()) {
+            $('html').addClass('mq');
+        } else {
+            $('html').addClass('no-mq');
+        }
+
+        // Add touch/no-touch class to html
+        if(hasTouch()) {
+            $('html').addClass('touch');
+        } else {
+            $('html').addClass('no-touch');
+        }
+      
+      
+    });
+})(jQuery);
+
+      $axure.utils.getTransparentGifPath = function() { return 'resources/images/transparent.gif'; };
+      $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
+      $axure.utils.getReloadPath = function() { return 'resources/reload.html'; };
+    </script>
+
+
+<style>
+  
+  body table {
+    font-size: 13px;
+  }
+  
+  .table-responsive td, .table-responsive th {
+    text-align: right;
+  }
+  
+.table-container {
+  width: 100%;
+  overflow: truncate;
+  float: left;
+}
+
+.table-responsive {
+  border-radius:0;
+  width: auto;
+}
+
+.table-responsive[data-pattern="priority-columns"] {
+  width: auto;
+}
+
+.btn-toolbar {
+  display: none;
+}
+
+#menu {
+  display: none;
+  height: 100%;
+  width: 160px;
+  float: left;
+  padding: 5px;
+}
+
+#menu .dropdown-menu>li.checkbox-row {
+  padding:0;
+}
+
+#menu .dropdown-menu{
+  display:  block;
+  position: static;
+  border:   none;
+  float:    none;
+  min-width:  100%;
+  box-shadow: none;
+}
+
+
+#menu .more {
+  display: none;
+}
+
+table.first-col {
+  float: left;
+  width:  160px;
+    font-weight: bold;
+}
+
+table.first-col td, table.first-col th {
+    border: 1px solid #ddd;
+    border-top: 1px solid #ddd !important;
+    border-right: none;
+}
+ 
+th {
+    min-width: 24px !important;
+    max-width: 48px !important;
+}
+
+th.medium {
+    max-width: 62px !important;
+}
+
+th.widget {
+  max-width: none;
+}
+  
+  td.midget {
+   position: relative; 
+    min-width: 83px;
+  }
+  
+td.midget div {
+    background-color: #ccc;
+    border: 2px solid #aaa;
+    color: #969696;
+    font-size: 16px;
+    font-weight: bold;
+}
+  
+  div.ticket {
+    height: 250px;
+    line-height: 250px;
+    width: 220px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-align: center;
+  }
+  
+  div.chart {
+    padding-top: 125px;
+    padding-left: 260px;
+    height: 438px;
+    width: 100%;
+    min-width: 500px;
+    text-align: left;
+  }
+  
+  @media screen and (min-width: 960px) {
+     table tr:first-child td {
+      background-color: #efefef;
+    }
+  }
+
+  
+</style>
+
+<script>
+   $(function() {
+      $('.table-responsive').responsiveTable({'addFocusBtn':false});
+   });
+  
+  
+      $( "#market" ).change(function() {
+        switch ( $( "#market" ).val() ) {
+          case 'chart':
+            $('.ticket').hide();
+            $('.chart').show();
+            break;
+          case 'ticket':
+            $('.ticket').show();
+            $('.chart').hide();
+            break;
+          case 'midget':
+            $('.ticket').show();
+            $('.chart').show();
+            break;
+          case 'none':
+            $('.checkbox-row:last-child input').attr('checked', false).trigger('change');
+            break;
+       }
+    });
+  
+      
+</script>
+
+  </head>
+  <body>
+    <div id="base" class="">
+
+      <!-- background (Rectangle) -->
+      <div id="u0" class="ax_default shape" data-label="background" tabindex="0" style="cursor: pointer; height: 1124px; width: 1964px;">
+        <div id="u0_div" class="" style="width: 1964px; height: 1124px;"></div>
+        <!-- Unnamed () -->
+        <div id="u1" class="text" style="visibility: hidden; display: none; height: 0px; width: 1960px;">
+          <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+        </div>
+      </div>
+
+      <!-- header (Rectangle) -->
+      <div id="u2" class="ax_default shape" data-label="header" tabindex="0" style="cursor: pointer; height: 45px; width: 2144px;">
+        <div id="u2_div" class="" style="width: 2144px; height: 45px;"></div>
+        <!-- Unnamed () -->
+        <div id="u3" class="text" style="visibility: hidden; display: none; height: 0px; width: 2140px;">
+          <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+        </div>
+      </div>
+
+      <!-- header right (Dynamic Panel) -->
+      <div id="u4" class="ax_default" data-label="header right" style="left: 1659px; top: 0px;">
+        <div id="u4_state0" class="panel_state" data-label="State1">
+          <div id="u4_state0_content" class="panel_state_content">
+
+            <!-- notificationTitle (Rectangle) -->
+            <div id="u5" class="ax_default label" data-label="notificationTitle" tabindex="0" style="cursor: pointer;">
+              <div id="u5_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u6" class="text" style="visibility: visible; left: 2px; transform-origin: 37px 8px 0px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:14px;text-decoration:none;color:#333333;">Notifications</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Vertical Line) -->
+            <div id="u7" class="ax_default line" widgetheight="32" widgetwidth="1" widgetcenterx="363.5" widgetcentery="24">
+              <div id="u7p000" class="ax_vector_shape" widgettopleftx="-0.445945945945946" widgettoplefty="0.166666666666666" widgettoprightx="-0.445945945945946" widgettoprighty="-0.166666666666667" widgetbottomleftx="0.418918918918919" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.418918918918919" widgetbottomrighty="-0.166666666666666">
+                <img id="u7p000_img" class="img " src="./prototype2_files/u7p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u8" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u9" class="ax_default image">
+              <img id="u9_img" class="img " src="./prototype2_files/u9.png">
+              <!-- Unnamed () -->
+              <div id="u10" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u11" class="ax_default image">
+              <img id="u11_img" class="img " src="./prototype2_files/u11.png">
+              <!-- Unnamed () -->
+              <div id="u12" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u13" class="ax_default label">
+              <div id="u13_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u14" class="text" style="visibility: visible; left: 2px; transform-origin: 40.5px 7.5px 0px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;">Spread betting</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Vertical Line) -->
+            <div id="u15" class="ax_default line" widgetheight="32" widgetwidth="1" widgetcenterx="201.5" widgetcentery="24">
+              <div id="u15p000" class="ax_vector_shape" widgettopleftx="-0.445945945945946" widgettoplefty="0.166666666666666" widgettoprightx="-0.445945945945946" widgettoprighty="-0.166666666666667" widgetbottomleftx="0.418918918918919" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.418918918918919" widgetbottomrighty="-0.166666666666666">
+                <img id="u15p000_img" class="img " src="./prototype2_files/u15p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u16" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- workspace names (Dynamic Panel) -->
+      <div id="u17" class="ax_default" data-label="workspace names">
+        <div id="u17_state0" class="panel_state" data-label="State1">
+          <div id="u17_state0_content" class="panel_state_content">
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u18" class="ax_default horizontal_line" widgetheight="4" widgetwidth="109" widgetcenterx="54.5" widgetcentery="2">
+              <div id="u18p000" class="ax_vector_shape" widgettopleftx="-0.466386554621849" widgettoplefty="-0.277777777777778" widgettoprightx="0.449579831932773" widgettoprighty="-0.277777777777778" widgetbottomleftx="-0.466386554621849" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.449579831932773" widgetbottomrighty="0.166666666666667">
+                <img id="u18p000_img" class="img " src="./prototype2_files/u18p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u19" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u20" class="ax_default paragraph">
+              <div id="u20_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u21" class="text" style="visibility: visible; left: 2px; transform-origin: 53px 7.5px 0px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#CC3300;">MY WORKSPACE</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u22" class="ax_default paragraph">
+              <div id="u22_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u23" class="text" style="visibility: visible; left: 2px; transform-origin: 44px 7.5px 0px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#999999;">New workspace</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u24" class="ax_default paragraph">
+              <div id="u24_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u25" class="text" style="visibility: visible; left: 2px; transform-origin: 4.5px 11.5px 0px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:20px;text-decoration:none;color:#999999;">+</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- container (Rectangle) -->
+      <div id="u26" class="ax_default flyout_box ax_default_hidden" data-label="container" style="display: none; visibility: hidden; height: 1168px; width: 500px;">
+        <div id="u26_div" class="" style="width: 500px; height: 1168px;"></div>
+        <!-- Unnamed () -->
+        <div id="u27" class="text" style="visibility: hidden; display: none; height: 0px; width: 496px;">
+          <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+        </div>
+      </div>
+
+      <!-- NAV (Nav) -->
+
+      <!-- Nav mode (Dynamic Panel) -->
+      <div id="u29" class="ax_default" data-label="Nav mode" style="height: 1168px; width: 180px;">
+        <div id="u29_state0" class="panel_state" data-label="Full 700" style="width: 180px; height: 1168px;">
+          <div id="u29_state0_content" class="panel_state_content">
+
+            <!-- nav bg full (Rectangle) -->
+            <div id="u30" class="ax_default shape" data-label="nav bg full" style="height: 1168px; width: 180px;">
+              <div id="u30_div" class="" style="width: 180px; height: 1168px;"></div>
+              <!-- Unnamed () -->
+              <div id="u31" class="text" style="visibility: hidden; display: none; height: 0px; width: 176px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u32" class="ax_default image">
+              <img id="u32_img" class="img " src="./prototype2_files/u32.png">
+              <!-- Unnamed () -->
+              <div id="u33" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u34" class="ax_default flyout_text_-_small">
+              <div id="u34_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u35" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">MARKETS</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u36" class="ax_default flyout_text">
+              <div id="u36_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u37" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Indices</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Forex</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Commodities</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Shares</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">ETFs</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Binaries</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Sprint markets</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u38" class="ax_default flyout_text_-_small">
+              <div id="u38_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u39" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">WATCHLISTS</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u40" class="ax_default image">
+              <img id="u40_img" class="img " src="./prototype2_files/u40.png">
+              <!-- Unnamed () -->
+              <div id="u41" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u42" class="ax_default image">
+              <img id="u42_img" class="img " src="./prototype2_files/u42.png">
+              <!-- Unnamed () -->
+              <div id="u43" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u44" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- fx (Hot Spot) -->
+            <div id="u45" class="ax_default" data-label="fx" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- shares (Hot Spot) -->
+            <div id="u46" class="ax_default" data-label="shares" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u47" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- comm (Hot Spot) -->
+            <div id="u48" class="ax_default" data-label="comm" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- ind (Hot Spot) -->
+            <div id="u49" class="ax_default" data-label="ind" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- etfs (Hot Spot) -->
+            <div id="u50" class="ax_default" data-label="etfs" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- bins (Hot Spot) -->
+            <div id="u51" class="ax_default" data-label="bins" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u52" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u53" class="ax_default dark_button">
+              <div id="u53_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u54" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;color:#FFFFFF;">view all</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u55" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u56" class="ax_default flyout_text_-_small">
+              <div id="u56_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u57" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">SEARCH</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u58" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u59" class="ax_default flyout_text">
+              <div id="u59_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u60" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">My watchlist</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">My other watchlist</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">My recent markets</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;"><br></span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#FFFFFF;">Popular markets</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u61" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u62" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u63" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u64" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- view all lists (Group) -->
+            <div id="u65" class="ax_default" data-label="view all lists">
+
+              <!-- nav bg full (Rectangle) -->
+              
+
+              <!-- Unnamed (Rectangle) -->
+              
+
+              <!-- Unnamed (Hot Spot) -->
+              
+            <div id="u66" class="ax_default shape" data-label="nav bg full" style="left: 5px; top: 496px;">
+                <div id="u66_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u67" class="text" style="display: none; visibility: hidden">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                </div>
+              </div><div id="u68" class="ax_default dark_button" style="left: 26px; top: 499px;">
+                <div id="u68_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u69" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;color:#FFFFFF;">view all</span></p>
+                </div>
+              </div><div id="u70" class="ax_default" tabindex="0" style="cursor: pointer; left: 11px; top: 499px;">
+              </div></div>
+
+            <!-- lower nav (Group) -->
+            <div id="u71" class="ax_default" data-label="lower nav">
+
+              <!-- nav bg full (Rectangle) -->
+              
+
+              <!-- counter - alerts (Rectangle) -->
+              
+
+              <!-- counter - news (Rectangle) -->
+              
+
+              <!-- counter - cal (Rectangle) -->
+              
+
+              <!-- Unnamed (Rectangle) -->
+              
+
+              <!-- Unnamed (Rectangle) -->
+              
+
+              <!-- Unnamed (Rectangle) -->
+              
+
+              <!-- Unnamed (Rectangle) -->
+              
+
+              <!-- Unnamed (Image) -->
+              
+
+              <!-- Unnamed (Hot Spot) -->
+              
+
+              <!-- Unnamed (Hot Spot) -->
+              
+
+              <!-- Unnamed (Hot Spot) -->
+              
+
+              <!-- counter - trades (Rectangle) -->
+              
+
+              <!-- Unnamed (Hot Spot) -->
+              
+
+              <!-- Unnamed (Rectangle) -->
+              
+
+              <!-- Unnamed (Hot Spot) -->
+              
+            <div id="u72" class="ax_default shape" data-label="nav bg full" style="left: 8px; top: 547px;">
+                <div id="u72_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u73" class="text" style="display: none; visibility: hidden">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                </div>
+              </div><div id="u74" class="ax_default flow_shape ax_default_hidden" data-label="counter - alerts" style="visibility: hidden; display: none; left: 146px; top: 646px;">
+                <img id="u74_img" class="img " src="./prototype2_files/counter_-_alerts_u74.png">
+                <!-- Unnamed () -->
+                <div id="u75" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">1</span></p>
+                </div>
+              </div><div id="u76" class="ax_default flow_shape ax_default_hidden" data-label="counter - news" style="visibility: hidden; display: none; left: 146px; top: 617px;">
+                <img id="u76_img" class="img " src="./prototype2_files/counter_-_alerts_u74.png">
+                <!-- Unnamed () -->
+                <div id="u77" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">1</span></p>
+                </div>
+              </div><div id="u78" class="ax_default flow_shape ax_default_hidden" data-label="counter - cal" style="visibility: hidden; display: none; left: 146px; top: 587px;">
+                <img id="u78_img" class="img " src="./prototype2_files/counter_-_alerts_u74.png">
+                <!-- Unnamed () -->
+                <div id="u79" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">1</span></p>
+                </div>
+              </div><div id="u80" class="ax_default flyout_text_-_small" style="left: 31px; top: 557px;">
+                <div id="u80_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u81" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">POSTITIONS </span></p>
+                </div>
+              </div><div id="u82" class="ax_default flyout_text_-_small" style="left: 31px; top: 587px;">
+                <div id="u82_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u83" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">CALENDAR</span></p>
+                </div>
+              </div><div id="u84" class="ax_default flyout_text_-_small" style="left: 31px; top: 617px;">
+                <div id="u84_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u85" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">NEWS</span></p>
+                </div>
+              </div><div id="u86" class="ax_default flyout_text_-_small" style="left: 31px; top: 646px;">
+                <div id="u86_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u87" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">ALERTS</span></p>
+                </div>
+              </div><div id="u88" class="ax_default image" style="left: 15px; top: 555px;">
+                <img id="u88_img" class="img " src="./prototype2_files/u88.png">
+                <!-- Unnamed () -->
+                <div id="u89" class="text" style="display: none; visibility: hidden">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+                </div>
+              </div><div id="u90" class="ax_default" tabindex="0" style="cursor: pointer; left: 8px; top: 581px;">
+              </div><div id="u91" class="ax_default" tabindex="0" style="cursor: pointer; left: 8px; top: 611px;">
+              </div><div id="u92" class="ax_default" tabindex="0" style="cursor: pointer; left: 8px; top: 641px;">
+              </div><div id="u93" class="ax_default flow_shape ax_default_hidden" data-label="counter - trades" style="visibility: hidden; display: none; left: 146px; top: 556px;">
+                <img id="u93_img" class="img " src="./prototype2_files/counter_-_alerts_u74.png">
+                <!-- Unnamed () -->
+                <div id="u94" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">0</span></p>
+                </div>
+              </div><div id="u95" class="ax_default" tabindex="0" style="cursor: pointer; left: 8px; top: 550px;">
+              </div><div id="u96" class="ax_default flyout_text_-_small" style="left: 31px; top: 675px;">
+                <div id="u96_div" class=""></div>
+                <!-- Unnamed () -->
+                <div id="u97" class="text" style="visibility: visible;">
+                  <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">SETTINGS</span></p>
+                </div>
+              </div><div id="u98" class="ax_default" tabindex="0" style="cursor: pointer; left: 8px; top: 670px;">
+              </div></div>
+
+            <!-- nav bottom full (Dynamic Panel) -->
+            <div id="u99" class="ax_default" data-label="nav bottom full" style="left: 0px; top: 1008px;">
+              <div id="u99_state0" class="panel_state" data-label="State1" style="width: 180px; height: 160px;">
+                <div id="u99_state0_content" class="panel_state_content">
+
+                  <!-- Unnamed (Image) -->
+                  <div id="u100" class="ax_default image">
+                    <img id="u100_img" class="img " src="./prototype2_files/u100.png">
+                    <!-- Unnamed () -->
+                    <div id="u101" class="text" style="display: none; visibility: hidden">
+                      <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+                    </div>
+                  </div>
+
+                  <!-- Unnamed (Rectangle) -->
+                  <div id="u102" class="ax_default flyout_text_-_small">
+                    <div id="u102_div" class=""></div>
+                    <!-- Unnamed () -->
+                    <div id="u103" class="text" style="visibility: visible;">
+                      <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#83828E;">CLOSE MENU</span></p>
+                    </div>
+                  </div>
+
+                  <!-- balances (Dynamic Panel) -->
+                  <div id="u104" class="ax_default" data-label="balances">
+                    <div id="u104_state0" class="panel_state" data-label="shown" style="width: 180px; height: 94px;">
+                      <div id="u104_state0_content" class="panel_state_content">
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u105" class="ax_default shape">
+                          <div id="u105_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u106" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Horizontal Line) -->
+                        <div id="u107" class="ax_default horizontal_line" widgetheight="1" widgetwidth="180" widgetcenterx="90" widgetcentery="0.5">
+                          <div id="u107p000" class="ax_vector_shape" widgettopleftx="-0.494535519125683" widgettoplefty="-0.166666666666667" widgettoprightx="0.489071038251366" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.494535519125683" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.489071038251366" widgetbottomrighty="0.166666666666667">
+                            <img id="u107p000_img" class="img " src="./prototype2_files/u107p000.png">
+                          </div>
+                          <!-- Unnamed () -->
+                          <div id="u108" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u109" class="ax_default flyout_text_-_muted">
+                          <div id="u109_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u110" class="text" style="visibility: visible;">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#83838F;">Funds</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#83838F;">Available</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#83838F;">P/L</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#83838F;">Margin</span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u111" class="ax_default flyout_text_-_small">
+                          <div id="u111_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u112" class="text" style="visibility: visible;">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">£1,500,000</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">£1,523,000</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">+£23,000</span></p><p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">£3,249</span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Image) -->
+                        <div id="u113" class="ax_default image">
+                          <img id="u113_img" class="img " src="./prototype2_files/u113.png">
+                          <!-- Unnamed () -->
+                          <div id="u114" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Hot Spot) -->
+                        <div id="u115" class="ax_default" tabindex="0" style="cursor: pointer;">
+                        </div>
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u116" class="ax_default box_1">
+                          <div id="u116_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u117" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u118" class="ax_default box_1">
+                          <div id="u118_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u119" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u120" class="ax_default flyout_text_-_small">
+                          <div id="u120_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u121" class="text" style="visibility: visible;">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">98%</span></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="u104_state1" class="panel_state" data-label="hidden" style="display: none; visibility: hidden; width: 180px; height: 94px;">
+                      <div id="u104_state1_content" class="panel_state_content">
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u122" class="ax_default shape">
+                          <div id="u122_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u123" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Horizontal Line) -->
+                        <div id="u124" class="ax_default horizontal_line" widgetheight="1" widgetwidth="180" widgetcenterx="90" widgetcentery="66.5">
+                          <div id="u124p000" class="ax_vector_shape" widgettopleftx="-0.494535519125683" widgettoplefty="-0.166666666666667" widgettoprightx="0.489071038251366" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.494535519125683" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.489071038251366" widgetbottomrighty="0.166666666666667">
+                            <img id="u124p000_img" class="img " src="./prototype2_files/u107p000.png">
+                          </div>
+                          <!-- Unnamed () -->
+                          <div id="u125" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Rectangle) -->
+                        <div id="u126" class="ax_default flyout_text_-_muted">
+                          <div id="u126_div" class=""></div>
+                          <!-- Unnamed () -->
+                          <div id="u127" class="text" style="visibility: visible;">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:11px;text-decoration:none;color:#83838F;">Show balances</span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Image) -->
+                        <div id="u128" class="ax_default image">
+                          <img id="u128_img" class="img " src="./prototype2_files/u113.png">
+                          <!-- Unnamed () -->
+                          <div id="u129" class="text" style="display: none; visibility: hidden">
+                            <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+                          </div>
+                        </div>
+
+                        <!-- Unnamed (Hot Spot) -->
+                        <div id="u130" class="ax_default" tabindex="0" style="cursor: pointer;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Unnamed (Hot Spot) -->
+                  <div id="u131" class="ax_default" tabindex="0" style="cursor: pointer;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="u29_state1" class="panel_state" data-label="mini 700" style="display: none; visibility: hidden; width: 180px; height: 1168px;">
+          <div id="u29_state1_content" class="panel_state_content">
+
+            <!-- nav bg mini (Rectangle) -->
+            <div id="u132" class="ax_default shape" data-label="nav bg mini" style="height: 1168px; width: 47px;">
+              <img id="u132_img" class="img " src="./prototype2_files/nav_bg_mini_u132.png" style="width: 57px; height: 1184.69px;">
+              <!-- Unnamed () -->
+              <div id="u133" class="text" style="visibility: hidden; display: none; height: 0px; width: 43px;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- nav bottom mini (Dynamic Panel) -->
+            <div id="u134" class="ax_default" data-label="nav bottom mini" style="left: 0px; top: 1008px;">
+              <div id="u134_state0" class="panel_state" data-label="State1" style="width: 45px; height: 142px;">
+                <div id="u134_state0_content" class="panel_state_content">
+
+                  <!-- Unnamed (Image) -->
+                  <div id="u135" class="ax_default image">
+                    <img id="u135_img" class="img " src="./prototype2_files/u135.png">
+                    <!-- Unnamed () -->
+                    <div id="u136" class="text" style="display: none; visibility: hidden">
+                      <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+                    </div>
+                  </div>
+
+                  <!-- Unnamed (Image) -->
+                  <div id="u137" class="ax_default image">
+                    <img id="u137_img" class="img " src="./prototype2_files/u137.png">
+                    <!-- Unnamed () -->
+                    <div id="u138" class="text" style="display: none; visibility: hidden">
+                      <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+                    </div>
+                  </div>
+
+                  <!-- Unnamed (Horizontal Line) -->
+                  <div id="u139" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="0.5">
+                    <div id="u139p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                      <img id="u139p000_img" class="img " src="./prototype2_files/u139p000.png">
+                    </div>
+                    <!-- Unnamed () -->
+                    <div id="u140" class="text" style="display: none; visibility: hidden">
+                      <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                    </div>
+                  </div>
+
+                  <!-- Unnamed (Horizontal Line) -->
+                  <div id="u141" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="45.5">
+                    <div id="u141p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                      <img id="u141p000_img" class="img " src="./prototype2_files/u139p000.png">
+                    </div>
+                    <!-- Unnamed () -->
+                    <div id="u142" class="text" style="display: none; visibility: hidden">
+                      <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+                    </div>
+                  </div>
+
+                  <!-- Unnamed (Hot Spot) -->
+                  <div id="u143" class="ax_default" tabindex="0" style="cursor: pointer;">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- counter - alerts (Ellipse) -->
+            <div id="u144" class="ax_default flow_shape ax_default_hidden" data-label="counter - alerts" style="display: none; visibility: hidden">
+              <img id="u144_img" class="img " src="./prototype2_files/counter_-_alerts_u144.png">
+              <!-- Unnamed () -->
+              <div id="u145" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">1</span></p>
+              </div>
+            </div>
+
+            <!-- counter - news (Ellipse) -->
+            <div id="u146" class="ax_default flow_shape ax_default_hidden" data-label="counter - news" style="display: none; visibility: hidden">
+              <img id="u146_img" class="img " src="./prototype2_files/counter_-_alerts_u144.png">
+              <!-- Unnamed () -->
+              <div id="u147" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">1</span></p>
+              </div>
+            </div>
+
+            <!-- counter - cal (Ellipse) -->
+            <div id="u148" class="ax_default flow_shape ax_default_hidden" data-label="counter - cal" style="display: none; visibility: hidden">
+              <img id="u148_img" class="img " src="./prototype2_files/counter_-_alerts_u144.png">
+              <!-- Unnamed () -->
+              <div id="u149" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:8px;text-decoration:none;color:#FFFFFF;">1</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u150" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="45.5">
+              <div id="u150p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u150p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u151" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u152" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="0.5">
+              <div id="u152p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u152p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u153" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u154" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="90.5">
+              <div id="u154p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u154p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u155" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u156" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="136.5">
+              <div id="u156p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u156p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u157" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u158" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="181.5">
+              <div id="u158p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u158p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u159" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u160" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="225.5">
+              <div id="u160p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u160p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u161" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u162" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="270.5">
+              <div id="u162p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u162p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u163" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u164" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="315.5">
+              <div id="u164p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u164p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u165" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u166" class="ax_default image">
+              <img id="u166_img" class="img " src="./prototype2_files/u166.png">
+              <!-- Unnamed () -->
+              <div id="u167" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u168" class="ax_default image">
+              <img id="u168_img" class="img " src="./prototype2_files/u168.png">
+              <!-- Unnamed () -->
+              <div id="u169" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u170" class="ax_default image">
+              <img id="u170_img" class="img " src="./prototype2_files/u170.png">
+              <!-- Unnamed () -->
+              <div id="u171" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u172" class="ax_default image">
+              <img id="u172_img" class="img " src="./prototype2_files/u172.png">
+              <!-- Unnamed () -->
+              <div id="u173" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u174" class="ax_default image">
+              <img id="u174_img" class="img " src="./prototype2_files/u174.png">
+              <!-- Unnamed () -->
+              <div id="u175" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u176" class="ax_default image">
+              <img id="u176_img" class="img " src="./prototype2_files/u176.png">
+              <!-- Unnamed () -->
+              <div id="u177" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Image) -->
+            <div id="u178" class="ax_default image">
+              <img id="u178_img" class="img " src="./prototype2_files/u178.png">
+              <!-- Unnamed () -->
+              <div id="u179" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#000000;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u180" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u181" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u182" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u183" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u184" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u185" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u186" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+
+            <!-- Unnamed (Rectangle) -->
+            <div id="u187" class="ax_default flyout_text_-_small">
+              <div id="u187_div" class=""></div>
+              <!-- Unnamed () -->
+              <div id="u188" class="text" style="visibility: visible;">
+                <p><span style="font-family:&#39;Arial-BoldMT&#39;, &#39;Arial Bold&#39;, &#39;Arial&#39;;font-weight:700;font-style:normal;font-size:11px;text-decoration:none;color:#FFFFFF;">S</span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Horizontal Line) -->
+            <div id="u189" class="ax_default line" widgetheight="1" widgetwidth="45" widgetcenterx="22.5" widgetcentery="359.5">
+              <div id="u189p000" class="ax_vector_shape" widgettopleftx="-0.479591836734694" widgettoplefty="-0.166666666666667" widgettoprightx="0.438775510204082" widgettoprighty="-0.166666666666667" widgetbottomleftx="-0.479591836734694" widgetbottomlefty="0.166666666666667" widgetbottomrightx="0.438775510204082" widgetbottomrighty="0.166666666666667">
+                <img id="u189p000_img" class="img " src="./prototype2_files/u139p000.png">
+              </div>
+              <!-- Unnamed () -->
+              <div id="u190" class="text" style="display: none; visibility: hidden">
+                <p><span style="font-family:&#39;ArialMT&#39;, &#39;Arial&#39;;font-weight:400;font-style:normal;font-size:13px;text-decoration:none;color:#333333;"></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (Hot Spot) -->
+            <div id="u191" class="ax_default" tabindex="0" style="cursor: pointer;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKSPACE CONTENT -->
+      <div id="list" class="panel">
+        <div class="header">My watchlist</div> 
+        <div class="body">
+
+
+
+
+
+          <div class="table-container">
+          <div onclick="$('#menu').animate({width: 'toggle'});"><span style="font-size:24px">⚙</span> menu</div>
+
+          <div id="menu">
+          </div>
+
+          <table class="table first-col">
+           <thead>
+            <th>Market name</th>
+           </thead>
+           <tr>
+            <td>Apple</td>
+           </tr>
+           <tr>
+            <td>Facebook</td>
+           </tr>
+           <tr>
+            <td>Wall Street</td>
+           </tr>
+           <tr>
+            <td>Amazon</td>
+           </tr>
+           <tr>
+            <td>Tesla</td>
+           </tr>
+           <tr>
+            <td>Google</td>
+           </tr>
+           <tr>
+            <td>FTSE 100</td>
+           </tr>
+           <tr>
+            <td>Vodafone</td>
+           </tr>
+           <tr>
+            <td>BP</td>
+           </tr>
+           <tr>
+            <td>Lloyds</td>
+           </tr>
+           <tr>
+            <td>Germany 30</td>
+           </tr>
+           <tr>
+            <td>EUR USD</td>
+           </tr>
+           <tr>
+            <td>EUR GBP</td>
+           </tr>
+            </table>
+
+
+
+          <div class="table-responsive" >
+          <table class="table">
+           <thead>
+            <th data-priority="1">Sell</th>
+            <th data-priority="2">Buy</th>
+            <th data-priority="1">Change: %</th>
+            <th data-priority="3" class="medium">points</th>
+            <th data-priority="3">High</th>
+            <th data-priority="3">Low</th>
+            <th data-priority="4">Spread</th>
+            <th data-priority="2">RSI</th>
+            <th data-priority="7">Last update</th>
+            <th data-priority="7">Volume</th>
+            <th data-priority="7">MACD</th>
+            <th data-priority="7">Moving average</th>
+            <th data-priority="7">Momentum</th>
+            <th data-priority="7" class="medium">Consecutive candles</th>
+            <th data-priority="7" class="medium">Standard deviation</th>
+            <th data-priority="7">Market cap</th>
+            <th data-priority="7">52wk high</th>
+            <th data-priority="7">52wk high date</th>
+            <th data-priority="7">52wk low</th>
+            <th data-priority="7">52wk low date</th>
+            <th data-priority="5" class="midget">
+                <select id="market">
+                  <option value="midget">Market overview</option>
+                  <option value="ticket">Ticket only</option>
+                  <option value="chart">Chart only</option>
+                  <option value="none">No market preview</option>
+              </select>
+              </th>
+           </thead>
+           <tr>
+            <td>851.8</td>
+            <td>853.8</td>
+            <td>5.45</td>
+            <td>0.64</td>
+            <td>825.8</td>
+            <td>868.8</td>
+            <td>2</td>
+            <td>73</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+             <td rowspan="14" class="midget">
+                 <div class="chart">
+                   Apple chart
+                 </div>
+               <div class="ticket">
+                  Apple ticket
+               </div>
+             </td>
+           </tr>
+           <tr>
+            <td>740.3</td>
+            <td>742.3</td>
+            <td>-0.74</td>
+            <td>-0.10</td>
+            <td>712.3</td>
+            <td>755.3</td>
+            <td>2</td>
+            <td>24</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>16317.2</td>
+            <td>16319.2</td>
+            <td>-1039.41</td>
+            <td>-6.37</td>
+            <td>16403.31</td>
+            <td>16222.99</td>
+            <td>1</td>
+            <td>63</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>501.4</td>
+            <td>503.4</td>
+            <td>42.47</td>
+            <td>8.47</td>
+            <td>519.4</td>
+            <td>491.4</td>
+            <td>1</td>
+            <td>35</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>295.8</td>
+            <td>297.8</td>
+            <td>-23.28</td>
+            <td>-7.87</td>
+            <td>317.8</td>
+            <td>286.8</td>
+            <td>4</td>
+            <td>36</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>0.9</td>
+            <td>2.9</td>
+            <td>0.04</td>
+            <td>4.90</td>
+            <td>25.9</td>
+            <td>20.9</td>
+            <td>1</td>
+            <td>76</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>6022.5</td>
+            <td>6024.5</td>
+            <td>-260.77</td>
+            <td>-4.33</td>
+            <td>6084.39</td>
+            <td>5926.8</td>
+            <td>1</td>
+            <td>57</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>370.6</td>
+            <td>372.6</td>
+            <td>-34.39</td>
+            <td>-9.28</td>
+            <td>380.6</td>
+            <td>400.6</td>
+            <td>1</td>
+            <td>48</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>396</td>
+            <td>398</td>
+            <td>-24.31</td>
+            <td>-6.14</td>
+            <td>412</td>
+            <td>392</td>
+            <td>2</td>
+            <td>46</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>842.6</td>
+            <td>844.6</td>
+            <td>-50.56</td>
+            <td>-6.00</td>
+            <td>839.6</td>
+            <td>836.6</td>
+            <td>1</td>
+            <td>68</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>9670.5</td>
+            <td>9672.5</td>
+            <td>239.83</td>
+            <td>2.48</td>
+            <td>9735.8</td>
+            <td>9652.06</td>
+            <td>1</td>
+            <td>96</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>1.12408</td>
+            <td>1.12428</td>
+            <td>-0.05</td>
+            <td>-5.44</td>
+            <td>1.12768</td>
+            <td>1.11827</td>
+            <td>3</td>
+            <td>84</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+           <tr>
+            <td>0.72798</td>
+            <td>0.72818</td>
+            <td>-0.04</td>
+            <td>-5.31</td>
+            <td>0.73903</td>
+            <td>0.72263</td>
+            <td>1</td>
+            <td>89</td>
+            <td>12/10/2015 09:00</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+          </table>
+
+          </div>
+
+          </div>
+            
+
+
+
+
+        </div>
+      </div>
+
+      <!-- nav click (Hot Spot) -->
+      <div id="u195" class="ax_default" data-label="nav click" tabindex="0" style="cursor: pointer; height: 1168px; width: 180px;">
+      </div>
+    </div>
+  
+
+</body></html>
